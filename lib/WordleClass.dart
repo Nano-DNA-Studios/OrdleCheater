@@ -1,8 +1,11 @@
 //import 'dart:ffi';
+import 'dart:js';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart';
+import 'package:ordlecheater/LetterBox.dart';
 import 'package:ordlecheater/WordClass.dart';
 import 'package:ordlecheater/main.dart';
 
@@ -19,39 +22,34 @@ class WordleClass {
   //Function to generate the 5 word boxes
   //Function to generate the possible words to display
 
-  WordleClass () {
+  WordleClass() {
     //Initialize the screen
   }
 
 
-Widget wordInputs () {
-
-  return Column(
-    children: [
-      //Word rows
-
-
-    ],
-  );
-
-}
+  Widget wordInputs() {
+    return Column(
+      children: [
+        //Word rows
 
 
-Widget wordRow (String word) {
-
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      LetterBox(letter: word.characters.elementAt(0).toString()),
-      LetterBox(letter: word.characters.elementAt(1).toString()),
-      LetterBox(letter: word.characters.elementAt(2).toString()),
-      LetterBox(letter: word.characters.elementAt(3).toString()),
-      LetterBox(letter: word.characters.elementAt(4).toString()),
-    ],
-  );
+      ],
+    );
+  }
 
 
-}
+  Widget wordRow(String word) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        LetterBox(letter: word.characters.elementAt(0).toString()),
+        LetterBox(letter: word.characters.elementAt(1).toString()),
+        LetterBox(letter: word.characters.elementAt(2).toString()),
+        LetterBox(letter: word.characters.elementAt(3).toString()),
+        LetterBox(letter: word.characters.elementAt(4).toString()),
+      ],
+    );
+  }
 
 /*
   Widget count() {
@@ -78,7 +76,8 @@ Widget wordRow (String word) {
     }
   }
 
-  Widget buildGridView() => GridView.builder(
+  Widget buildGridView() =>
+      GridView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -88,18 +87,16 @@ Widget wordRow (String word) {
         itemBuilder: (context, index) {
           return BuildGridWidget(index);
         },
-        itemCount: maxNum(.possibleWords.length),
+        itemCount: maxNum(possibleWords.length),
       );
 
 
-  int maxNum (int length) {
-
+  int maxNum(int length) {
     if (length > 200) {
       return 200;
     } else {
       return length;
     }
-
   }
 
   Widget BuildGridWidget(int index) {
@@ -171,21 +168,145 @@ Widget wordRow (String word) {
 
 
 class WordlePage extends StatefulWidget {
-  const WordlePage(
-      {required this.wordClass});
+  const WordlePage({required this.wordClass});
 
-final WordClass wordClass;
+  final WordClass wordClass;
 
   @override
-  State<LetterBox> createState() => _WordlePage();
+  State<WordlePage> createState() => _WordlePage();
 }
 
 
 class _WordlePage extends State<WordlePage> {
 
+  WordClass wordClass = WordClass();
 
-  return
+  void notifyParent () {
 
+  }
+
+
+  Widget letterBoxes(String word, WordClass wordClass, int wordIndex) {
+
+    return Row (
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+       LetterBox(letter: word.characters.elementAt(0).toString(), wordIndex: wordIndex, letterIndex: 1, wordClass: wordClass, notifyParent: notifyParent),
+        LetterBox(letter: word.characters.elementAt(1).toString(), wordIndex: wordIndex, letterIndex: 2, wordClass: wordClass, notifyParent: notifyParent),
+        LetterBox(letter: word.characters.elementAt(2).toString(), wordIndex: wordIndex, letterIndex: 3, wordClass: wordClass, notifyParent: notifyParent),
+        LetterBox(letter: word.characters.elementAt(3).toString(), wordIndex: wordIndex, letterIndex: 4, wordClass: wordClass, notifyParent: notifyParent),
+        LetterBox(letter: word.characters.elementAt(4).toString(), wordIndex: wordIndex, letterIndex: 5, wordClass: wordClass, notifyParent: notifyParent)
+
+      ],
+    );
+
+
+  }
+
+  Widget wordRow(BuildContext cont, String word, WordClass wordClass) {
+    return Center(
+      child: SizedBox(
+        child: letterBoxes(),
+        height: UIManipulation.calcFacorPix(
+            UIManipulation.getScreenHeightPix(cont),
+            UIManipulation.getScreenWidthPix(cont) *
+                UIManipulation.getPlatformFac(0.6, 0.95), 5, true),
+        width: UIManipulation.getWidthPix(
+            UIManipulation.getScreenWidthPix(cont),
+            UIManipulation.getPlatformFac(0.6, 0.95)),
+
+      ),
+    );
+  }
+
+
+//Pass the WordClass Words as the word
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.purpleAccent,
+          title: const Text("Wordle"),
+        ),
+        body: SingleChildScrollView(
+            padding: EdgeInsets.only(left: 0,
+                top: UIManipulation.getScreenWidthPix(context) * 0.05,
+                right: 0,
+                bottom: 0),
+            scrollDirection: Axis.vertical,
+            child: Column(
+
+              children: [
+                WordRow(word: "Hello", wordleClass: wordleClass,),
+                WordRow(word: "Stair", wordleClass: wordleClass,),
+                WordRow(word: "Words", wordleClass: wordleClass,),
+                WordRow(word: "Weird", wordleClass: wordleClass,),
+                WordRow(word: "Glues", wordleClass: wordleClass,),
+                Words(
+                  dataClass: wordleClass,
+                ),
+
+              ],
+            )));
+  }
+
+
+}
+
+
+class UIManipulation {
+
+  static double getScreenHeightPix(BuildContext cont) {
+    return MediaQuery
+        .of(cont)
+        .size
+        .height;
+  }
+
+  static double getScreenWidthPix(BuildContext cont) {
+    return MediaQuery
+        .of(cont)
+        .size
+        .width;
+  }
+
+  static double getWidthPix(double screenWidth, double widthFac) {
+    return screenWidth * widthFac;
+  }
+
+  static double getHeightPix(double screenHeight, double heightFac) {
+    return screenHeight * heightFac;
+  }
+
+  static double getPlatformFac(double webVal, double mobileVal) {
+    if (kIsWeb) {
+      return webVal;
+    } else {
+      return mobileVal;
+    }
+  }
+
+  static double calcFacorPix(double mainAxisVal, double crossAxisVal,
+      double crossAxisFrac, bool Pix) {
+    if (Pix) {
+      //Pixels
+      return (crossAxisVal / crossAxisFrac);
+    } else {
+      //Fac
+      return (crossAxisVal / crossAxisFrac) / mainAxisVal;
+    }
+  }
+
+
+/*
+ double _CalcHeightFac() {
+   double screenHeight = MediaQuery.of(context).size.height;
+   double cardWidth =
+   ((MediaQuery.of(context).size.width * _GetWidthFac()) / 5);
+   return (cardWidth) / screenHeight;
+ }
+
+ */
 
 
 }

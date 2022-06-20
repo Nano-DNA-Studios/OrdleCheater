@@ -25,10 +25,13 @@ class WordClass {
 
   late List<String> possibleWords = [];
 
+  /*
   WordleClass() {
     //loadWords();
    // possibleWords = calcPossibleWords();
   }
+
+   */
 
   void updatePossibleWords () {
     possibleWords = calcPossibleWords();

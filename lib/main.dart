@@ -124,7 +124,7 @@ class _WordlePage extends State<WordlePage> {
             )));
   }
 }
-
+/*
 class WordRow extends StatefulWidget {
   WordRow({Key? key, required this.word, required this.wordleClass}) : super(key: key);
 
@@ -232,6 +232,8 @@ class _LetterBox extends State<LetterBox> {
   }
 }
 
+
+ */
 class Words extends StatefulWidget {
   const Words({/*required this.hello,*/ Key? key, required this.dataClass})
       : super(key: key);
