@@ -9,6 +9,8 @@ import 'package:ordlecheater/LetterBox.dart';
 import 'package:ordlecheater/WordClass.dart';
 import 'package:ordlecheater/main.dart';
 
+import 'UIManipulation.dart';
+
 class WordleClass {
 
   WordClass wordClass = WordClass();
@@ -24,6 +26,8 @@ class WordleClass {
 
   WordleClass() {
     //Initialize the screen
+
+
   }
 
 
@@ -31,110 +35,6 @@ class WordleClass {
     return Column(
       children: [
         //Word rows
-
-
-      ],
-    );
-  }
-
-
-  Widget wordRow(String word) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        LetterBox(letter: word.characters.elementAt(0).toString()),
-        LetterBox(letter: word.characters.elementAt(1).toString()),
-        LetterBox(letter: word.characters.elementAt(2).toString()),
-        LetterBox(letter: word.characters.elementAt(3).toString()),
-        LetterBox(letter: word.characters.elementAt(4).toString()),
-      ],
-    );
-  }
-
-/*
-  Widget count() {
-//    return Text(possibleWords.length.toString());
-  }
-
- */
-
-  int platfromGridNum() {
-    if (kIsWeb) {
-      return 4;
-    } else {
-      //Phones and Other Platforms
-      return 2;
-    }
-  }
-
-  double platformFontSize() {
-    if (kIsWeb) {
-      return 80;
-    } else {
-      //Phones and Other Platforms
-      return 45;
-    }
-  }
-
-  Widget buildGridView() =>
-      GridView.builder(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: platfromGridNum(),
-          crossAxisSpacing: 20,
-        ),
-        itemBuilder: (context, index) {
-          return BuildGridWidget(index);
-        },
-        itemCount: maxNum(possibleWords.length),
-      );
-
-
-  int maxNum(int length) {
-    if (length > 200) {
-      return 200;
-    } else {
-      return length;
-    }
-  }
-
-  Widget BuildGridWidget(int index) {
-    return Container(
-        alignment: Alignment.center,
-        child: Container(
-          height: platformFontSize() + 10,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: Offset(0, 3), // changes position of shadow
-              ),
-            ],
-            borderRadius: BorderRadius.all(const Radius.circular(20)),
-            color: Colors.lightBlueAccent,
-          ),
-          child: Text(
-            possibleWords[index],
-            maxLines: 1,
-            style: TextStyle(fontSize: platformFontSize()),
-          ),
-        )
-
-    );
-  }
-
-  Row wordRowWidget(List<String> words) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(words[0]),
-        Text(words[1]),
-        Text(words[2]),
-        Text(words[3]),
 
 
       ],
@@ -166,11 +66,10 @@ class WordleClass {
   }
 }
 
-
 class WordlePage extends StatefulWidget {
-  const WordlePage({required this.wordClass});
+  const WordlePage();
 
-  final WordClass wordClass;
+  //final WordClass wordClass;
 
   @override
   State<WordlePage> createState() => _WordlePage();
@@ -185,6 +84,90 @@ class _WordlePage extends State<WordlePage> {
 
   }
 
+  int platfromGridNum() {
+    if (kIsWeb) {
+      return 4;
+    } else {
+      //Phones and Other Platforms
+      return 2;
+    }
+  }
+
+  double platformFontSize() {
+    if (kIsWeb) {
+      return 80;
+    } else {
+      //Phones and Other Platforms
+      return 45;
+    }
+  }
+
+  int maxNum(int length) {
+    if (length > 200) {
+      return 200;
+    } else {
+      return length;
+    }
+  }
+
+//Maybe not needed
+  Row wordRowWidget(List<String> words) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(words[0]),
+        Text(words[1]),
+        Text(words[2]),
+        Text(words[3]),
+
+
+      ],
+    );
+  }
+
+
+  Widget buildGridView() =>
+      GridView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: platfromGridNum(),
+          crossAxisSpacing: 20,
+        ),
+        itemBuilder: (context, index) {
+          return BuildGridWidget(index);
+        },
+        itemCount: maxNum(wordClass.possibleWords.length),
+      );
+
+
+  Widget BuildGridWidget(int index) {
+    return Container(
+        alignment: Alignment.center,
+        child: Container(
+          height: platformFontSize() + 10,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ],
+            borderRadius: BorderRadius.all(const Radius.circular(20)),
+            color: Colors.lightBlueAccent,
+          ),
+          child: Text(
+            wordClass.possibleWords[index],
+            maxLines: 1,
+            style: TextStyle(fontSize: platformFontSize()),
+          ),
+        )
+
+    );
+  }
 
   Widget letterBoxes(String word, WordClass wordClass, int wordIndex) {
 
@@ -196,17 +179,13 @@ class _WordlePage extends State<WordlePage> {
         LetterBox(letter: word.characters.elementAt(2).toString(), wordIndex: wordIndex, letterIndex: 3, wordClass: wordClass, notifyParent: notifyParent),
         LetterBox(letter: word.characters.elementAt(3).toString(), wordIndex: wordIndex, letterIndex: 4, wordClass: wordClass, notifyParent: notifyParent),
         LetterBox(letter: word.characters.elementAt(4).toString(), wordIndex: wordIndex, letterIndex: 5, wordClass: wordClass, notifyParent: notifyParent)
-
       ],
     );
-
-
   }
 
-  Widget wordRow(BuildContext cont, String word, WordClass wordClass) {
+  Widget wordRow(BuildContext cont, String word, WordClass wordClass, int wordIndex) {
     return Center(
       child: SizedBox(
-        child: letterBoxes(),
         height: UIManipulation.calcFacorPix(
             UIManipulation.getScreenHeightPix(cont),
             UIManipulation.getScreenWidthPix(cont) *
@@ -214,9 +193,28 @@ class _WordlePage extends State<WordlePage> {
         width: UIManipulation.getWidthPix(
             UIManipulation.getScreenWidthPix(cont),
             UIManipulation.getPlatformFac(0.6, 0.95)),
+        child: letterBoxes( word, wordClass, wordIndex ),
 
       ),
     );
+  }
+
+  Widget words (BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(left: 0, top: UIManipulation.getScreenHeightPix(context) * 0.1, right: 0, bottom: 0),
+      child: FractionallySizedBox(
+        widthFactor: UIManipulation.getPlatformFac(0.7, 0.95),
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(UIManipulation.getScreenWidthPix(context) * 0.05),
+          decoration: const BoxDecoration(
+              color: Colors.purpleAccent,
+              borderRadius: BorderRadius.all(Radius.circular(40))),
+          child: Expanded(child: buildGridView()),
+        ),
+      ),
+    )
+    ;
   }
 
 
@@ -237,14 +235,14 @@ class _WordlePage extends State<WordlePage> {
             child: Column(
 
               children: [
-                WordRow(word: "Hello", wordleClass: wordleClass,),
-                WordRow(word: "Stair", wordleClass: wordleClass,),
-                WordRow(word: "Words", wordleClass: wordleClass,),
-                WordRow(word: "Weird", wordleClass: wordleClass,),
-                WordRow(word: "Glues", wordleClass: wordleClass,),
-                Words(
-                  dataClass: wordleClass,
-                ),
+              wordRow(context, "Hello", wordClass, 1),
+                wordRow(context, "Class", wordClass, 2),
+                wordRow(context, "Words", wordClass, 3),
+                wordRow(context, "Bunny", wordClass, 4),
+                wordRow(context, "Whale", wordClass, 5),
+
+                words(context)
+
 
               ],
             )));
@@ -254,62 +252,6 @@ class _WordlePage extends State<WordlePage> {
 }
 
 
-class UIManipulation {
-
-  static double getScreenHeightPix(BuildContext cont) {
-    return MediaQuery
-        .of(cont)
-        .size
-        .height;
-  }
-
-  static double getScreenWidthPix(BuildContext cont) {
-    return MediaQuery
-        .of(cont)
-        .size
-        .width;
-  }
-
-  static double getWidthPix(double screenWidth, double widthFac) {
-    return screenWidth * widthFac;
-  }
-
-  static double getHeightPix(double screenHeight, double heightFac) {
-    return screenHeight * heightFac;
-  }
-
-  static double getPlatformFac(double webVal, double mobileVal) {
-    if (kIsWeb) {
-      return webVal;
-    } else {
-      return mobileVal;
-    }
-  }
-
-  static double calcFacorPix(double mainAxisVal, double crossAxisVal,
-      double crossAxisFrac, bool Pix) {
-    if (Pix) {
-      //Pixels
-      return (crossAxisVal / crossAxisFrac);
-    } else {
-      //Fac
-      return (crossAxisVal / crossAxisFrac) / mainAxisVal;
-    }
-  }
-
-
-/*
- double _CalcHeightFac() {
-   double screenHeight = MediaQuery.of(context).size.height;
-   double cardWidth =
-   ((MediaQuery.of(context).size.width * _GetWidthFac()) / 5);
-   return (cardWidth) / screenHeight;
- }
-
- */
-
-
-}
 
 
 

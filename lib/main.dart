@@ -80,6 +80,8 @@ class _NavPage extends State<NavPage> {
   }
 }
 
+
+/*
 class WordlePage extends StatefulWidget {
   const WordlePage({Key? key}) : super(key: key);
 
@@ -111,11 +113,11 @@ class _WordlePage extends State<WordlePage> {
             child: Column(
 
               children: [
-               WordRow(word: "Hello", wordleClass: wordleClass,),
-                WordRow(word: "Stair", wordleClass: wordleClass,),
-                WordRow(word: "Words", wordleClass: wordleClass,),
-                WordRow(word: "Weird", wordleClass: wordleClass,),
-                WordRow(word: "Glues", wordleClass: wordleClass,),
+              // WordRow(word: "Hello", wordleClass: wordleClass,),
+             //   WordRow(word: "Stair", wordleClass: wordleClass,),
+               // WordRow(word: "Words", wordleClass: wordleClass,),
+              //  WordRow(word: "Weird", wordleClass: wordleClass,),
+             //   WordRow(word: "Glues", wordleClass: wordleClass,),
                 Words(
                   dataClass: wordleClass,
                 ),
@@ -451,5 +453,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+ */
 
  */

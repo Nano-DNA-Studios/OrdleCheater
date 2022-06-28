@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'LetterBox.dart';
 import 'WordleClass.dart';
 
+/*
 class WordRow extends StatefulWidget {
   WordRow({Key? key, required this.word, required this.wordleClass}) : super(key: key);
 
@@ -57,6 +58,8 @@ class _WordRow extends State<WordRow> {
     );
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -64,3 +67,6 @@ class _WordRow extends State<WordRow> {
             height: _GetHeightPix(), width: _GetWidthPix(), child: Letters()));
   }
 }
+
+
+ */
