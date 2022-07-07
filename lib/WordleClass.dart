@@ -3,14 +3,19 @@ import 'dart:js';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart' show LogicalKeyboardKey, rootBundle;
 import 'package:flutter/widgets.dart';
 import 'package:ordlecheater/LetterBox.dart';
 import 'package:ordlecheater/WordClass.dart';
+import 'package:ordlecheater/WordRow.dart';
+import 'package:ordlecheater/allLetters.dart';
+import 'package:ordlecheater/functionStorage.dart';
 import 'package:ordlecheater/main.dart';
 
 import 'UIManipulation.dart';
-
+import 'allLetters.dart';
+import 'WordRow.dart';
+/*
 class WordleClass {
 
   WordClass wordClass = WordClass();
@@ -66,8 +71,125 @@ class WordleClass {
   }
 }
 
+ */
+
 class WordlePage extends StatefulWidget {
-  const WordlePage();
+  const WordlePage({Key? key}) : super(key: key);
+
+  @override
+  State<WordlePage> createState() => _WordlePage();
+}
+
+class _WordlePage extends State<WordlePage> {
+  //Create a new Word Class
+  late void Function() myMethod;
+
+  late Function() childFunc;
+
+
+
+
+  WordClass wordClass = WordClass();
+  functionStorage store = new functionStorage();
+
+  String word1 = "Hello";
+  String word2 = "Wrong";
+  String word3 = "Color";
+  String word4 = "Blues";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+
+
+
+
+  }
+
+  void notifyParent() {
+    setState(() {
+      word1 = "Unity";
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return RawKeyboardListener(
+        focusNode: FocusNode(),
+        autofocus: true,
+        onKey: (event) {
+          if (validKeys.contains(event.logicalKey) &&
+              event.character.toString() != "null") {
+            print("letter detected");
+            wordClass.word4 += event.character.toString();
+            print(wordClass.word4);
+            setState(() {
+              print("Setting state");
+
+             // WordRowState.getChildFunc();
+
+            });
+          } else {
+            print("not entered");
+          }
+        },
+        child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.purpleAccent,
+              title: const Text("Wordle"),
+            ),
+            body: SingleChildScrollView(
+                padding: EdgeInsets.only(
+                    left: 0,
+                    top: UIManipulation.getScreenWidthPix(context) * 0.05,
+                    right: 0,
+                    bottom: 0),
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: [
+                    WordRow(
+                      notifyParent: notifyParent,
+                      wordNum: 1,
+                      wordClass: wordClass,
+
+                    ),
+                    WordRow(
+                      notifyParent: notifyParent,
+                      wordNum: 2,
+                      wordClass: wordClass,
+
+                    ),
+                    WordRow(
+                      notifyParent: notifyParent,
+                      wordNum: 3,
+                      wordClass: wordClass,
+
+                    ),
+                    WordRow(
+                      notifyParent: notifyParent,
+                      wordNum: 4,
+                      wordClass: wordClass,
+
+                    ),
+
+                    // wordRow(context, "Hello", wordClass, 1),
+                    // wordRow(context, "Class", wordClass, 2),
+                    //  wordRow(context, "Words", wordClass, 3),
+                    //  wordRow(context, "Bunny", wordClass, 4),
+                    //  wordRow(context, "Whale", wordClass, 5),
+
+                    //words(context)
+                  ],
+                ))));
+  }
+}
+
+/*
+
+class WordlePage extends StatefulWidget {
+  const WordlePage({Key? key}) : super(key: key);
 
   //final WordClass wordClass;
 
@@ -174,11 +296,15 @@ class _WordlePage extends State<WordlePage> {
     return Row (
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-       LetterBox(letter: word.characters.elementAt(0).toString(), wordIndex: wordIndex, letterIndex: 1, wordClass: wordClass, notifyParent: notifyParent),
-        LetterBox(letter: word.characters.elementAt(1).toString(), wordIndex: wordIndex, letterIndex: 2, wordClass: wordClass, notifyParent: notifyParent),
-        LetterBox(letter: word.characters.elementAt(2).toString(), wordIndex: wordIndex, letterIndex: 3, wordClass: wordClass, notifyParent: notifyParent),
-        LetterBox(letter: word.characters.elementAt(3).toString(), wordIndex: wordIndex, letterIndex: 4, wordClass: wordClass, notifyParent: notifyParent),
-        LetterBox(letter: word.characters.elementAt(4).toString(), wordIndex: wordIndex, letterIndex: 5, wordClass: wordClass, notifyParent: notifyParent)
+
+        LetterBox(letter: "h")
+
+
+       //LetterBox(letter: word.characters.elementAt(0).toString(), wordIndex: wordIndex, letterIndex: 1, wordClass: wordClass, notifyParent: notifyParent),
+        //LetterBox(letter: word.characters.elementAt(1).toString(), wordIndex: wordIndex, letterIndex: 2, wordClass: wordClass, notifyParent: notifyParent),
+       // LetterBox(letter: word.characters.elementAt(2).toString(), wordIndex: wordIndex, letterIndex: 3, wordClass: wordClass, notifyParent: notifyParent),
+       // LetterBox(letter: word.characters.elementAt(3).toString(), wordIndex: wordIndex, letterIndex: 4, wordClass: wordClass, notifyParent: notifyParent),
+       // LetterBox(letter: word.characters.elementAt(4).toString(), wordIndex: wordIndex, letterIndex: 5, wordClass: wordClass, notifyParent: notifyParent)
       ],
     );
   }
@@ -193,7 +319,8 @@ class _WordlePage extends State<WordlePage> {
         width: UIManipulation.getWidthPix(
             UIManipulation.getScreenWidthPix(cont),
             UIManipulation.getPlatformFac(0.6, 0.95)),
-        child: letterBoxes( word, wordClass, wordIndex ),
+        child: WordRow(word: "Hello")//letterBoxes( word, wordClass, wordIndex ),
+
 
       ),
     );
@@ -235,11 +362,12 @@ class _WordlePage extends State<WordlePage> {
             child: Column(
 
               children: [
-              wordRow(context, "Hello", wordClass, 1),
-                wordRow(context, "Class", wordClass, 2),
-                wordRow(context, "Words", wordClass, 3),
-                wordRow(context, "Bunny", wordClass, 4),
-                wordRow(context, "Whale", wordClass, 5),
+                WordRow(word: "Hello"),
+             // wordRow(context, "Hello", wordClass, 1),
+               // wordRow(context, "Class", wordClass, 2),
+              //  wordRow(context, "Words", wordClass, 3),
+              //  wordRow(context, "Bunny", wordClass, 4),
+              //  wordRow(context, "Whale", wordClass, 5),
 
                 words(context)
 
@@ -251,8 +379,14 @@ class _WordlePage extends State<WordlePage> {
 
 }
 
+ */
+
+/*
+Possibly wanted
 
 
 
 
 
+
+ */

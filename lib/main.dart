@@ -10,6 +10,10 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:ordlecheater/WordleClass.dart';
 import 'package:ordlecheater/icomoon_icons.dart';
 import 'package:ordlecheater/my_icons_icons.dart';
+import 'package:ordlecheater/WordClass.dart';
+
+import 'LetterBox.dart';
+import 'UIManipulation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -51,7 +55,7 @@ class _NavPage extends State<NavPage> {
   int _index = 0;
 
   static const List<Widget> _screens = <Widget>[
-    const WordlePage(),
+    WordlePage(),
     Text(
       "Worldle",
       style: TextStyle(color: Colors.black),
@@ -113,24 +117,28 @@ class _WordlePage extends State<WordlePage> {
             child: Column(
 
               children: [
-              // WordRow(word: "Hello", wordleClass: wordleClass,),
+               WordRow(word: "Hello", wordleClass: wordleClass,),
              //   WordRow(word: "Stair", wordleClass: wordleClass,),
                // WordRow(word: "Words", wordleClass: wordleClass,),
               //  WordRow(word: "Weird", wordleClass: wordleClass,),
              //   WordRow(word: "Glues", wordleClass: wordleClass,),
-                Words(
-                  dataClass: wordleClass,
-                ),
+               //Words(
+                //  dataClass: wordleClass,
+              //  ),
 
               ],
             )));
   }
 }
+
+ */
+
+
 /*
 class WordRow extends StatefulWidget {
-  WordRow({Key? key, required this.word, required this.wordleClass}) : super(key: key);
+  WordRow({Key? key, required this.word}) : super(key: key);
 
-  final WordleClass wordleClass;
+ // final WordleClass wordleClass;
   final String word;
   final double widthFacPhone = 0.95;
   final double widthFacWeb = 0.6;
@@ -186,56 +194,16 @@ class _WordRow extends State<WordRow> {
   }
 }
 
-class LetterBox extends StatefulWidget {
-  const LetterBox({required this.letter});
-
-  final String letter;
-
-  @override
-  State<LetterBox> createState() => _LetterBox();
-}
-
-class _LetterBox extends State<LetterBox> {
-  Color cardColor = Colors.white;
-  int colorState = 1;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Card(
-          color: cardColor,
-          child: InkWell(
-            onTap: () {
-              setState(() {
-                colorState++;
-                if (colorState > 3) {
-                  colorState = 1;
-                }
-                switch (colorState) {
-                  case 1:
-                    cardColor = Colors.white;
-                    break;
-                  case 2:
-                    cardColor = Colors.orange;
-                    break;
-                  case 3:
-                    cardColor = Colors.green;
-                    break;
-                }
-              });
-            },
-            splashColor: Colors.blue,
-            child: FittedBox(
-              fit: BoxFit.contain,
-              child: Text(widget.letter),
-            ),
-          )),
-    );
-  }
-}
-
-
  */
+
+
+
+
+
+
+
+
+ /*
 class Words extends StatefulWidget {
   const Words({/*required this.hello,*/ Key? key, required this.dataClass})
       : super(key: key);
@@ -311,6 +279,8 @@ class _Words extends State<Words> {
     )
       ;
 
+
+  */
 /*
     return FractionallySizedBox(
       widthFactor: GetWidthFac(),
@@ -364,9 +334,11 @@ class _Words extends State<Words> {
       ),
     );
 
- */
+
   }
 }
+
+ */
 
 /*
 class MyHomePage extends StatefulWidget {
@@ -456,4 +428,4 @@ class _MyHomePageState extends State<MyHomePage> {
 
  */
 
- */
+
