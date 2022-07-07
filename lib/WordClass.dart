@@ -1,4 +1,3 @@
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -6,7 +5,12 @@ import 'package:flutter/widgets.dart';
 import 'package:ordlecheater/main.dart';
 
 import 'allWords.dart';
+
 class WordClass {
+
+  static const String space = " ";
+
+
 
   late String letter1 = "";
   late String letter2 = "";
@@ -16,14 +20,18 @@ class WordClass {
 
   late List<String> includedLetters = [];
 
-  late String word1;
-  late String word2;
-  late String word3;
-  late String word4;
+  late String word1 = "Hello";
+  late String word2 = "Wrong";
+  late String word3 = "Color";
+  late String word4 = "";
   late String word5;
 
-
   late List<String> possibleWords = [];
+
+
+
+
+
 
   /*
   WordleClass() {
@@ -33,10 +41,10 @@ class WordClass {
 
    */
 
-  void updatePossibleWords () {
+  void updatePossibleWords() {
     possibleWords = calcPossibleWords();
-  }
 
+  }
 
   List<String> calcPossibleWords() {
     // List<String> listCopy = allWords;
@@ -101,16 +109,74 @@ class WordClass {
     }
   }
 
+  String getLetter(int wordNum, int letterNum) {
+    //Maybe turn the words stuff to a list (think later)
 
+    switch (wordNum) {
+      case 1:
+        if (word1.isEmpty || word1 == "") {
+          return space;
+        } else {
+          if ((letterNum - 1) > word1.length) {
+            return space;
+          } else {
+            return word1.characters.characterAt(letterNum - 1).toString();
+          }
+        }
 
+      case 2:
+        if (word2.isEmpty || word2 == "") {
+          return space;
+        } else {
+          if ((letterNum - 1) > word2.length) {
+            return space;
+          } else {
+            return word2.characters.characterAt(letterNum - 1).toString();
+          }
+        }
 
+      case 3:
+        if (word3.isEmpty || word3 == "") {
+          return space;
+        } else {
+          if ((letterNum - 1) > word3.length) {
+            return space;
+          } else {
+            return word3.characters.characterAt(letterNum - 1).toString();
+          }
+        }
 
+      case 4:
+        if (word4.isEmpty || word4 == "") {
+          return space;
+        } else {
+          if ((letterNum - 1) > word4.length) {
+            return space;
+          } else {
+            return word4.characters.characterAt(letterNum - 1).toString();
+          }
+        }
+
+      case 5:
+        if (word5.isEmpty || word5 == "") {
+          return space;
+        } else {
+          if ((letterNum - 1) > word5.length) {
+            return space;
+          } else {
+            return word5.characters.characterAt(letterNum - 1).toString();
+          }
+        }
+
+      default:
+        return space;
+    }
+  }
 }
 
 /*
 garbage for now
  */
-
 
 /*
   void loadWords() async {
@@ -150,7 +216,6 @@ garbage for now
 
  */
 
-
 /*
   Widget wordsView() {
     return GridView(
@@ -181,7 +246,6 @@ garbage for now
       */
 
 // Text(possibleWords[index], maxLines: 1,style: TextStyle(fontSize: 50),),
-
 
 /*
     return  Container(
@@ -269,5 +333,3 @@ garbage for now
           )),
 
        */
-
-
