@@ -4,12 +4,12 @@ import 'package:ordlecheater/main.dart';
 import 'package:holding_gesture/holding_gesture.dart';
 import 'WordClass.dart';
 
-
-
 class LetterBox extends StatefulWidget {
-  const LetterBox({ required this.notifyParent, required this.wordNum, required this.letterNum, required this.wordClass});
-
-
+  const LetterBox(
+      {required this.notifyParent,
+      required this.wordNum,
+      required this.letterNum,
+      required this.wordClass});
 
   //Letterbox needs to store
   /*
@@ -20,13 +20,13 @@ class LetterBox extends StatefulWidget {
 wordclass
    */
 
-final int  wordNum;
-final int letterNum;
-final WordClass wordClass;
-
+  final int wordNum;
+  final int letterNum;
+  final WordClass wordClass;
 
   //final String letter;
   final Function() notifyParent;
+
   @override
   State<LetterBox> createState() => LetterBoxState();
 }
@@ -37,33 +37,28 @@ class LetterBoxState extends State<LetterBox> {
   FocusNode focusNode = FocusNode();
   String letter = "";
 
-@override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
     letter = widget.wordClass.getLetter(widget.wordNum, widget.letterNum);
-updateLetter();
-   // print("letter is " + letter);
+    updateLetter();
+    // print("letter is " + letter);
   }
 
   @override
   void didUpdateWidget(LetterBox oldWidget) {
-super.didUpdateWidget(oldWidget);
+    super.didUpdateWidget(oldWidget);
     updateLetter();
   }
 
-
-
-
-
-  void updateLetter () {
+  void updateLetter() {
     letter = widget.wordClass.getLetter(widget.wordNum, widget.letterNum);
- // setState(() {
+    // setState(() {
 
- // });
+    // });
   }
-
 
 /*
   void returnWord(String val) {
@@ -119,80 +114,65 @@ super.didUpdateWidget(oldWidget);
 
  */
 
-
   void getFocus() {
     focusNode.requestFocus();
 
     setState(() {
+      cardColor = Colors.deepPurple;
 
-   cardColor = Colors.deepPurple;
+      //widget.notifyParent();
 
-   //widget.notifyParent();
-
-   //Open keyboard for mobile users
+      //Open keyboard for mobile users
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Card(
-        color: cardColor,
-        child: HoldDetector(
-        holdTimeout: const Duration(milliseconds: 100),
-        onHold: getFocus,
-        child: InkWell(
-          onTap: () {
-            setState(() {
+          color: cardColor,
+          child: HoldDetector(
+            holdTimeout: const Duration(milliseconds: 100),
+            onHold: getFocus,
+            child: InkWell(
+              onTap: () {
+                setState(() {
+                  widget.notifyParent();
 
-              widget.notifyParent();
+                  updateLetter();
 
-              updateLetter();
-
-              colorState++;
-              if (colorState > 3) {
-                colorState = 1;
-              }
-              switch (colorState) {
-                case 1:
-                  cardColor = Colors.white;
-                  break;
-                case 2:
-                  cardColor = Colors.orange;
-                  break;
-                case 3:
-                  cardColor = Colors.green;
-                  break;
-              }
-            });
-
-
-
-
-          },
-          splashColor: Colors.blue,
-          child: FittedBox(
-            fit: BoxFit.contain,
-            child: Text(letter
-             // focusNode: focusNode,
-             // onChanged: (value) {
-               // returnWord(value);
-             // },
+                  colorState++;
+                  if (colorState > 3) {
+                    colorState = 1;
+                  }
+                  switch (colorState) {
+                    case 1:
+                      cardColor = Colors.white;
+                      break;
+                    case 2:
+                      cardColor = Colors.orange;
+                      break;
+                    case 3:
+                      cardColor = Colors.green;
+                      break;
+                  }
+                });
+              },
+              splashColor: Colors.blue,
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: Text(letter
+                    // focusNode: focusNode,
+                    // onChanged: (value) {
+                    // returnWord(value);
+                    // },
+                    ),
+              ),
             ),
-          ),
-        ),
-            )
-      ),
+          )),
     );
-
-
   }
 }
-
-
-
-
 
 /*
 class LetterBox extends StatefulWidget {
