@@ -173,6 +173,12 @@ class _WordlePage extends State<WordlePage> {
                       wordClass: wordClass,
 
                     ),
+                    WordRow(
+                      notifyParent: notifyParent,
+                      wordNum: 5,
+                      wordClass: wordClass,
+
+                    ),
 
                     // wordRow(context, "Hello", wordClass, 1),
                     // wordRow(context, "Class", wordClass, 2),
@@ -184,6 +190,15 @@ class _WordlePage extends State<WordlePage> {
                   ],
                 ))));
   }
+
+
+
+
+
+
+
+
+
 }
 
 /*

@@ -7,10 +7,7 @@ import 'package:ordlecheater/main.dart';
 import 'allWords.dart';
 
 class WordClass {
-
   static const String space = " ";
-
-
 
   late String letter1 = "";
   late String letter2 = "";
@@ -23,15 +20,10 @@ class WordClass {
   late String word1 = "Hello";
   late String word2 = "Wrong";
   late String word3 = "Color";
-  late String word4 = "";
-  late String word5;
+  late String word4 = "Heros";
+  late String word5 = "helos";
 
   late List<String> possibleWords = [];
-
-
-
-
-
 
   /*
   WordleClass() {
@@ -41,9 +33,14 @@ class WordClass {
 
    */
 
+  //Need to add a function that capatilizes everything or lowercases everything
+
+
+
+
+
   void updatePossibleWords() {
     possibleWords = calcPossibleWords();
-
   }
 
   List<String> calcPossibleWords() {
@@ -172,6 +169,80 @@ class WordClass {
         return space;
     }
   }
+
+  void addLetterAtPos (int pos, String letter) {
+    switch (pos) {
+      case 1:
+        letter1 = letter;
+        break;
+      case 2:
+        letter2 = letter;
+        break;
+      case 3:
+        letter3 = letter;
+        break;
+      case 4:
+        letter4 = letter;
+        break;
+      case 5:
+        letter5 = letter;
+        break;
+    }
+  }
+
+  void removeLetterAtPos (int pos) {
+    switch (pos) {
+      case 1:
+        letter1 = "";
+        break;
+      case 2:
+        letter2 = "";
+        break;
+      case 3:
+        letter3 = "";
+        break;
+      case 4:
+        letter4 = "";
+        break;
+      case 5:
+        letter5 = "";
+        break;
+    }
+  }
+
+
+  bool isLetterCorrect (int pos, String letter) {
+
+    switch (pos) {
+      case 1:
+        return areEqual(letter1, letter);
+
+      case 2:
+        return areEqual(letter2, letter);
+
+      case 3:
+        return areEqual(letter3, letter);
+
+      case 4:
+        return areEqual(letter4, letter);
+
+      case 5:
+        return areEqual(letter5, letter);
+      default:
+        return false;
+    }
+  }
+
+  bool areEqual (String letterAtPos, String letterInp) {
+    if (letterAtPos == letterInp) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
+
 }
 
 /*
