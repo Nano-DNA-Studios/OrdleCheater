@@ -41,7 +41,7 @@ class LetterBoxState extends State<LetterBox> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
+print("init");
     letter = widget.wordClass.getLetter(widget.wordNum, widget.letterNum);
     updateLetter();
     // print("letter is " + letter);
@@ -50,11 +50,51 @@ class LetterBoxState extends State<LetterBox> {
   @override
   void didUpdateWidget(LetterBox oldWidget) {
     super.didUpdateWidget(oldWidget);
+    print("update");
     updateLetter();
+    //print("hello");
   }
 
   void updateLetter() {
     letter = widget.wordClass.getLetter(widget.wordNum, widget.letterNum);
+
+    //check if the letter is contained in possible list or confirmed list
+    if (widget.wordClass.includedLetters.contains(letter)) {
+      //set to orange at least, check if in correct position as well to make it green
+      if (colorState <= 2) {
+        colorState = 2;
+        cardColor = Colors.orange;
+      }
+
+      if (widget.wordClass.isLetterCorrect(widget.letterNum, letter)) {
+        colorState = 3;
+        cardColor = Colors.green;
+      }
+    } else {
+      colorState = 1;
+      cardColor = Colors.white;
+    }
+
+    /*
+    if (widget.wordClass.includedLetters.contains(letter) && colorState < 2) {
+      colorState = 2;
+      print("set colour");
+
+
+      cardColor = Colors.orange;
+
+
+    }
+
+     */
+
+
+
+
+
+
+
+
     // setState(() {
 
     // });
@@ -144,16 +184,23 @@ class LetterBoxState extends State<LetterBox> {
                   colorState++;
                   if (colorState > 3) {
                     colorState = 1;
+                    print("colour reset");
                   }
+
+                  print(colorState);
                   switch (colorState) {
                     case 1:
                       cardColor = Colors.white;
+                      widget.wordClass.removeLetterAtPos(widget.letterNum);
+                      widget.wordClass.includedLetters.remove(letter);
                       break;
                     case 2:
                       cardColor = Colors.orange;
+                      widget.wordClass.includedLetters.add(letter);
                       break;
                     case 3:
                       cardColor = Colors.green;
+                      widget.wordClass.addLetterAtPos(widget.letterNum, letter);
                       break;
                   }
                 });
