@@ -8,7 +8,9 @@ import 'package:flutter/widgets.dart';
 import 'package:ordlecheater/LetterBox.dart';
 import 'package:ordlecheater/WordClass.dart';
 import 'package:ordlecheater/WordRow.dart';
+import 'package:ordlecheater/Words.dart';
 import 'package:ordlecheater/allLetters.dart';
+import 'package:ordlecheater/wordChoices.dart';
 import 'package:ordlecheater/functionStorage.dart';
 import 'package:ordlecheater/main.dart';
 
@@ -86,11 +88,9 @@ class _WordlePage extends State<WordlePage> {
 
   late Function() childFunc;
 
-
-
-
   WordClass wordClass = WordClass();
   functionStorage store = new functionStorage();
+  WordChoices choices = WordChoices();
 
   String word1 = "Hello";
   String word2 = "Wrong";
@@ -101,10 +101,6 @@ class _WordlePage extends State<WordlePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-
-
-
 
   }
 
@@ -178,7 +174,15 @@ class _WordlePage extends State<WordlePage> {
                       wordNum: 5,
                       wordClass: wordClass,
 
+
                     ),
+
+              //Spawn the possible words section
+              Words(wordClass: wordClass),
+
+              //  Words(
+                  //  dataClass: wordleClass,
+                   // ),
 
                     // wordRow(context, "Hello", wordClass, 1),
                     // wordRow(context, "Class", wordClass, 2),

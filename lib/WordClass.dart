@@ -9,6 +9,8 @@ import 'allWords.dart';
 class WordClass {
   static const String space = " ";
 
+  late bool upperCase;
+
   late String letter1 = "";
   late String letter2 = "";
   late String letter3 = "";
@@ -16,26 +18,36 @@ class WordClass {
   late String letter5 = "";
 
   late List<String> includedLetters = [];
+  late List<String> removeLetters = [];
 
-  late String word1 = "Hello";
-  late String word2 = "Wrong";
-  late String word3 = "Color";
-  late String word4 = "Heros";
-  late String word5 = "helos";
+  late String word1 = "Crane";
+  late String word2 = "Biome";
+  late String word3 = "";
+  late String word4 = "";
+  late String word5 = "";
 
   late List<String> possibleWords = [];
 
-  /*
+/*
   WordleClass() {
     //loadWords();
    // possibleWords = calcPossibleWords();
+
+
   }
 
-   */
+ */
+
+  WordClass () {
+    print("start");
+    upperCase = true;
+    cleanWords();
+
+  }
+
+
 
   //Need to add a function that capatilizes everything or lowercases everything
-
-
 
 
 
@@ -45,8 +57,13 @@ class WordClass {
 
   List<String> calcPossibleWords() {
     // List<String> listCopy = allWords;
-    List<String> wordList = allWords;
+    List<String> wordList = allWords3;
     // List<String> wordList2 = allWords;
+
+    print(removeLetters);
+
+    wordList = cleanList(wordList);
+    wordList = removeUnwantedWords(wordList, removeLetters);
 
     //Have checks for each of these
     if (letter1.isNotEmpty) {
@@ -75,6 +92,7 @@ class WordClass {
   List<String> wordsWithIncluded(List<String> words, List<String> letters) {
     List<String> newWords = [];
     //Word must contain all the letters that are included
+    removeLetters.clear();
 
     for (String word in words) {
       bool wordCheck = true;
@@ -234,12 +252,70 @@ class WordClass {
   }
 
   bool areEqual (String letterAtPos, String letterInp) {
-    if (letterAtPos == letterInp) {
+    if (letterAtPos.toLowerCase() == letterInp.toLowerCase()) {
       return true;
     } else {
       return false;
     }
   }
+
+  void cleanWords () {
+    //Clean the words by making them lower case
+    /*
+    word1 = word1.toLowerCase();
+    word2 = word2.toLowerCase();
+    word3 = word3.toLowerCase();
+    word4 = word4.toLowerCase();
+    word5 = word5.toLowerCase();
+
+     */
+
+    word1 = word1.toUpperCase();
+    word2 = word2.toUpperCase();
+    word3 = word3.toUpperCase();
+    word4 = word4.toUpperCase();
+    word5 = word5.toUpperCase();
+  }
+
+
+  List<String> cleanList (List<String> wordList) {
+    List<String> newWords = [];
+    for (String i in wordList) {
+      if (upperCase) {
+        newWords.add(i.toUpperCase());
+      } else {
+        newWords.add(i.toLowerCase());
+      }
+
+
+    }
+
+    return newWords;
+
+  }
+
+  List<String> removeUnwantedWords (List<String> words, List<String> letters) {
+    if (letters.isEmpty) {
+      print("in here");
+      return words;
+    }
+
+    List<String> newList = [];
+    for (String word in words) {
+      bool included = false;
+      for (String letter in letters) {
+        if (word.contains(letter)) {
+          included = true;
+        }
+      }
+      if (!included) {
+        newList.add(word);
+      }
+    }
+    return newList;
+  }
+
+
 
 
 
