@@ -101,13 +101,6 @@ void getChildFunc () {
 
 }
 
-
-
-
-
-
-
-
 /*
 class WordRow extends StatefulWidget {
   WordRow({Key? key, required this.word}) : super(key: key);

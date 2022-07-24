@@ -41,7 +41,7 @@ class LetterBoxState extends State<LetterBox> {
   void initState() {
     // TODO: implement initState
     super.initState();
-print("init");
+    //print("init");
     letter = widget.wordClass.getLetter(widget.wordNum, widget.letterNum);
     updateLetter();
     // print("letter is " + letter);
@@ -50,13 +50,17 @@ print("init");
   @override
   void didUpdateWidget(LetterBox oldWidget) {
     super.didUpdateWidget(oldWidget);
-    print("update");
+   // print("update");
     updateLetter();
     //print("hello");
   }
 
   void updateLetter() {
     letter = widget.wordClass.getLetter(widget.wordNum, widget.letterNum);
+
+
+
+
 
     //check if the letter is contained in possible list or confirmed list
     if (widget.wordClass.includedLetters.contains(letter)) {
@@ -73,6 +77,12 @@ print("init");
     } else {
       colorState = 1;
       cardColor = Colors.white;
+
+      if (!widget.wordClass.removeLetters.contains(letter)) {
+        widget.wordClass.removeLetters.add(letter);
+      }
+
+
     }
 
     /*
@@ -193,14 +203,21 @@ print("init");
                       cardColor = Colors.white;
                       widget.wordClass.removeLetterAtPos(widget.letterNum);
                       widget.wordClass.includedLetters.remove(letter);
+                      widget.wordClass.removeLetters.add(letter);
+
                       break;
                     case 2:
                       cardColor = Colors.orange;
                       widget.wordClass.includedLetters.add(letter);
+                      widget.wordClass.removeLetters.remove(letter);
+
+                      print(widget.wordClass.removeLetters);
+
                       break;
                     case 3:
                       cardColor = Colors.green;
                       widget.wordClass.addLetterAtPos(widget.letterNum, letter);
+
                       break;
                   }
                 });
