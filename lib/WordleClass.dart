@@ -1,5 +1,7 @@
 //import 'dart:ffi';
-import 'dart:js';
+//import 'dart:js';
+
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -97,11 +99,14 @@ class _WordlePage extends State<WordlePage> {
   String word3 = "Color";
   String word4 = "Blues";
 
+  String wordInput = "";
+
+  final textController = TextEditingController();
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
 
   void notifyParent() {
@@ -110,27 +115,188 @@ class _WordlePage extends State<WordlePage> {
     });
   }
 
+  Widget cardWid(int flex) {
+    return Flexible(
+      child: Card(
+        color: Colors.red,
+        child: Container(
+          height: 100,
+          color: Colors.deepPurple,
+          child: FittedBox(
+            fit: BoxFit.contain,
+            child: Text("Hello"),
+          ),
+        ),
+      ),
+      flex: flex,
+    );
+  }
+
+  Widget controller() {
+    return Container(
+      height: UIManipulation.getScreenHeightPix(context) * UIManipulation.getPlatformFac(0.4, 0.2),
+      width: UIManipulation.getScreenWidthPix(context) *
+          UIManipulation.getPlatformFac(0.7, 0.95),
+      child: SizedBox(
+        width: UIManipulation.getScreenWidthPix(context) *
+            UIManipulation.getPlatformFac(0.7, 0.95) *
+            0.9,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Flexible(
+              flex: 1,
+              child: Container(
+                  height: UIManipulation.getPlatformFac(
+                      UIManipulation.getScreenHeightPix(context) * 0.4 * 0.5,
+                      UIManipulation.getScreenHeightPix(context) * 0.4 * 0.2),
+                  child: Card(
+                      color: Colors.red,
+                      child: InkWell(
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: Text("DEL"),
+                        ),
+                        onTap: () {
+                          //Tomorrow or whenever the next time is I need to add the RemoveWord function to the delete button and then I'm basically done
+
+                          setState(() {
+                            wordClass.removeWord();
+                            print(wordClass.wordNum);
+
+                            /*
+                          wordInput = textController.text.toString();
+
+                          if (WordClass.wordInList(wordClass.clean1Word(wordInput), wordClass.upperCase)) {
+                            print("InputField: " + wordInput);
+                            //Add the word to the list I guess
+                            wordClass.addWord(wordClass.clean1Word(wordInput));
+                            wordInput = "";
+                            textController.text = "";
+
+
+                          }
+                           */
+                          });
+                          //Check if word is contained in the all word list and then add it
+                        },
+                        splashColor: Colors.blue,
+                      ))),
+            ),
+            Flexible(
+              flex: 3,
+              child: Container(
+                  height:
+                  UIManipulation.getPlatformFac(
+                      UIManipulation.getScreenHeightPix(context) * 0.4 * 0.5,
+                      UIManipulation.getScreenHeightPix(context) * 0.4 * 0.2),
+                  child: Card(
+                    color: Colors.pinkAccent,
+                    child: TextField(
+                      controller: textController,
+                      style: TextStyle(
+                        fontSize: UIManipulation.getPlatformFac(
+                            UIManipulation.getScreenHeightPix(context) *
+                                0.4 *
+                                0.5 *
+                                0.75,
+                            UIManipulation.getScreenHeightPix(context) *
+                                0.4 *
+                                0.2 *
+                                0.75),
+                      ),
+                      keyboardType: TextInputType.text,
+                    ),
+                  )),
+            ),
+            Flexible(
+              flex: 1,
+              child: Container(
+                  height: UIManipulation.getPlatformFac(
+                      UIManipulation.getScreenHeightPix(context) * 0.4 * 0.5,
+                      UIManipulation.getScreenHeightPix(context) * 0.4 * 0.2)
+                     ,
+                  child: Card(
+                      color: Colors.green,
+                      child: InkWell(
+                        onTap: () {
+                          //Tomorrow or whenever the next time is I need to add the RemoveWord function to the delete button and then I'm basically done
+
+                          setState(() {
+                            wordInput = textController.text.toString();
+
+                            if (WordClass.wordInList(
+                                wordClass.clean1Word(wordInput),
+                                wordClass.upperCase)) {
+                              print("InputField: " + wordInput);
+                              //Add the word to the list I guess
+                              wordClass
+                                  .addWord(wordClass.clean1Word(wordInput));
+                              wordInput = "";
+                              textController.text = "";
+                              print(wordClass.wordNum);
+                            }
+                          });
+                          //Check if word is contained in the all word list and then add it
+                        },
+                        splashColor: Colors.blue,
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: Text("ADD"),
+                        ),
+                      ))),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return RawKeyboardListener(
         focusNode: FocusNode(),
         autofocus: true,
+        /*
         onKey: (event) {
-          if (validKeys.contains(event.logicalKey) &&
-              event.character.toString() != "null") {
-            print("letter detected");
-            wordClass.word4 += event.character.toString();
-            print(wordClass.word4);
+          if (validKeys.contains(event.logicalKey)) {
+            //  print(event.character.toString());
+            //&&
+            //               event.character.toString() != "null"
+
+            //  print("letter detected");
+
+            if (event.logicalKey == LogicalKeyboardKey.backspace) {
+              if (currentWord.length > 0) {
+                print("Before: $currentWord");
+
+                String placeHolder = currentWord;
+                currentWord = "";
+                for (int i = 0; i < placeHolder.length - 1; i++) {
+                  currentWord = currentWord + placeHolder[i];
+                }
+
+                print("After: $currentWord");
+              }
+            } else {
+              if (event.character.toString() != "null") {
+                currentWord += event.character.toString();
+              }
+            }
+
+            // print(currentWord);
+
             setState(() {
               print("Setting state");
-
-             // WordRowState.getChildFunc();
-
+              wordClass.displayLetters(currentWord);
             });
           } else {
             print("not entered");
+            print(event.character.toString());
           }
         },
+
+         */
         child: Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.purpleAccent,
@@ -149,40 +315,36 @@ class _WordlePage extends State<WordlePage> {
                       notifyParent: notifyParent,
                       wordNum: 1,
                       wordClass: wordClass,
-
                     ),
                     WordRow(
                       notifyParent: notifyParent,
                       wordNum: 2,
                       wordClass: wordClass,
-
                     ),
                     WordRow(
                       notifyParent: notifyParent,
                       wordNum: 3,
                       wordClass: wordClass,
-
                     ),
                     WordRow(
                       notifyParent: notifyParent,
                       wordNum: 4,
                       wordClass: wordClass,
-
                     ),
                     WordRow(
                       notifyParent: notifyParent,
                       wordNum: 5,
                       wordClass: wordClass,
-
-
                     ),
 
-              //Spawn the possible words section
-              Words(wordClass: wordClass),
+                    controller(),
 
-              //  Words(
-                  //  dataClass: wordleClass,
-                   // ),
+                    //Spawn the possible words section
+                    Words(wordClass: wordClass),
+
+                    //  Words(
+                    //  dataClass: wordleClass,
+                    // ),
 
                     // wordRow(context, "Hello", wordClass, 1),
                     // wordRow(context, "Class", wordClass, 2),
@@ -194,15 +356,6 @@ class _WordlePage extends State<WordlePage> {
                   ],
                 ))));
   }
-
-
-
-
-
-
-
-
-
 }
 
 /*

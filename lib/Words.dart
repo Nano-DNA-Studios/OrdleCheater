@@ -40,7 +40,7 @@ class _Words extends State<Words> {
     return  Container(
       padding: EdgeInsets.only(
           left: 0,
-          top: UIManipulation.getScreenHeightPix(context) * 0.1,
+          top: UIManipulation.getScreenHeightPix(context) *  UIManipulation.getPlatformFac(0.1, 0.01),
           right: 0,
           bottom: 0),
       child: FractionallySizedBox(
@@ -77,16 +77,8 @@ class _Words extends State<Words> {
         child: Container(
           height: platformFontSize() + 10,
           alignment: Alignment.center,
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: const Offset(0, 3), // changes position of shadow
-              ),
-            ],
-            borderRadius: const BorderRadius.all(Radius.circular(20)),
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
             color: Colors.lightBlueAccent,
           ),
           child: Text(

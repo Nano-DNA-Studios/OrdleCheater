@@ -27,4 +27,6 @@ Set<LogicalKeyboardKey> validKeys = {
   LogicalKeyboardKey.keyX,
   LogicalKeyboardKey.keyY,
   LogicalKeyboardKey.keyZ,
+  LogicalKeyboardKey.backspace,
+  //LogicalKeyboardKey.clear,
 };

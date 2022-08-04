@@ -58,10 +58,6 @@ class LetterBoxState extends State<LetterBox> {
   void updateLetter() {
     letter = widget.wordClass.getLetter(widget.wordNum, widget.letterNum);
 
-
-
-
-
     //check if the letter is contained in possible list or confirmed list
     if (widget.wordClass.includedLetters.contains(letter)) {
       //set to orange at least, check if in correct position as well to make it green

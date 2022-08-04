@@ -20,11 +20,13 @@ class WordClass {
   late List<String> includedLetters = [];
   late List<String> removeLetters = [];
 
-  late String word1 = "Crane";
-  late String word2 = "Biome";
+  late String word1 = "";
+  late String word2 = "";
   late String word3 = "";
   late String word4 = "";
   late String word5 = "";
+
+  late int wordNum = 1;
 
   late List<String> possibleWords = [];
 
@@ -32,24 +34,15 @@ class WordClass {
   WordleClass() {
     //loadWords();
    // possibleWords = calcPossibleWords();
-
-
   }
-
  */
-
-  WordClass () {
+  WordClass() {
     print("start");
     upperCase = true;
     cleanWords();
-
   }
 
-
-
   //Need to add a function that capatilizes everything or lowercases everything
-
-
 
   void updatePossibleWords() {
     possibleWords = calcPossibleWords();
@@ -60,7 +53,7 @@ class WordClass {
     List<String> wordList = allWords3;
     // List<String> wordList2 = allWords;
 
-    print(removeLetters);
+    // print(removeLetters);
 
     wordList = cleanList(wordList);
     wordList = removeUnwantedWords(wordList, removeLetters);
@@ -129,66 +122,47 @@ class WordClass {
 
     switch (wordNum) {
       case 1:
-        if (word1.isEmpty || word1 == "") {
-          return space;
-        } else {
-          if ((letterNum - 1) > word1.length) {
-            return space;
-          } else {
-            return word1.characters.characterAt(letterNum - 1).toString();
-          }
-        }
+        //print("Letter Num: " + letterNum.toString());
+        //print("Word1 Length: " + word1.length.toString());
+        //print(returnLetter(word1, letterNum));
+        return returnLetter(word1, letterNum);
 
       case 2:
-        if (word2.isEmpty || word2 == "") {
-          return space;
-        } else {
-          if ((letterNum - 1) > word2.length) {
-            return space;
-          } else {
-            return word2.characters.characterAt(letterNum - 1).toString();
-          }
-        }
+        return returnLetter(word2, letterNum);
 
       case 3:
-        if (word3.isEmpty || word3 == "") {
-          return space;
-        } else {
-          if ((letterNum - 1) > word3.length) {
-            return space;
-          } else {
-            return word3.characters.characterAt(letterNum - 1).toString();
-          }
-        }
+        return returnLetter(word3, letterNum);
 
       case 4:
-        if (word4.isEmpty || word4 == "") {
-          return space;
-        } else {
-          if ((letterNum - 1) > word4.length) {
-            return space;
-          } else {
-            return word4.characters.characterAt(letterNum - 1).toString();
-          }
-        }
+        return returnLetter(word4, letterNum);
 
       case 5:
-        if (word5.isEmpty || word5 == "") {
-          return space;
-        } else {
-          if ((letterNum - 1) > word5.length) {
-            return space;
-          } else {
-            return word5.characters.characterAt(letterNum - 1).toString();
-          }
-        }
+        return returnLetter(word5, letterNum);
 
       default:
         return space;
     }
   }
 
-  void addLetterAtPos (int pos, String letter) {
+  String returnLetter(String word, int letterNum) {
+    try {
+      if (word.isEmpty || word == "") {
+        return space;
+      } else {
+        if ((letterNum - 1) >= word.length) {
+          print("Giving Space");
+          return space;
+        } else {
+          return word.characters.characterAt(letterNum - 1).toString();
+        }
+      }
+    } on Exception {
+      print("error");
+      return space;
+    }
+  }
+
+  void addLetterAtPos(int pos, String letter) {
     switch (pos) {
       case 1:
         letter1 = letter;
@@ -208,7 +182,7 @@ class WordClass {
     }
   }
 
-  void removeLetterAtPos (int pos) {
+  void removeLetterAtPos(int pos) {
     switch (pos) {
       case 1:
         letter1 = "";
@@ -228,9 +202,7 @@ class WordClass {
     }
   }
 
-
-  bool isLetterCorrect (int pos, String letter) {
-
+  bool isLetterCorrect(int pos, String letter) {
     switch (pos) {
       case 1:
         return areEqual(letter1, letter);
@@ -251,7 +223,7 @@ class WordClass {
     }
   }
 
-  bool areEqual (String letterAtPos, String letterInp) {
+  bool areEqual(String letterAtPos, String letterInp) {
     if (letterAtPos.toLowerCase() == letterInp.toLowerCase()) {
       return true;
     } else {
@@ -259,26 +231,24 @@ class WordClass {
     }
   }
 
-  void cleanWords () {
+  void cleanWords() {
     //Clean the words by making them lower case
-    /*
-    word1 = word1.toLowerCase();
-    word2 = word2.toLowerCase();
-    word3 = word3.toLowerCase();
-    word4 = word4.toLowerCase();
-    word5 = word5.toLowerCase();
-
-     */
-
-    word1 = word1.toUpperCase();
-    word2 = word2.toUpperCase();
-    word3 = word3.toUpperCase();
-    word4 = word4.toUpperCase();
-    word5 = word5.toUpperCase();
+    if (upperCase) {
+      word1 = word1.toUpperCase();
+      word2 = word2.toUpperCase();
+      word3 = word3.toUpperCase();
+      word4 = word4.toUpperCase();
+      word5 = word5.toUpperCase();
+    } else {
+      word1 = word1.toLowerCase();
+      word2 = word2.toLowerCase();
+      word3 = word3.toLowerCase();
+      word4 = word4.toLowerCase();
+      word5 = word5.toLowerCase();
+    }
   }
 
-
-  List<String> cleanList (List<String> wordList) {
+  List<String> cleanList(List<String> wordList) {
     List<String> newWords = [];
     for (String i in wordList) {
       if (upperCase) {
@@ -286,15 +256,11 @@ class WordClass {
       } else {
         newWords.add(i.toLowerCase());
       }
-
-
     }
-
     return newWords;
-
   }
 
-  List<String> removeUnwantedWords (List<String> words, List<String> letters) {
+  List<String> removeUnwantedWords(List<String> words, List<String> letters) {
     if (letters.isEmpty) {
       print("in here");
       return words;
@@ -315,10 +281,138 @@ class WordClass {
     return newList;
   }
 
+  void displayLetters(String str) {
+    clearWords();
+    List<String> words = cleanList(makeWords(str));
+    for (int i = 0; i < 5; i++) {
+      switch (i) {
+        case 0:
+          word1 = words[i];
+          break;
+        case 1:
+          word2 = words[i];
+          break;
+        case 2:
+          word3 = words[i];
+          break;
+        case 3:
+          word4 = words[i];
+          break;
+        case 4:
+          word5 = words[i];
+          break;
+      }
+    }
+    cleanWords();
+  }
 
+  void clearWords() {
+    word1 = "";
+    word2 = "";
+    word3 = "";
+    word4 = "";
+    word5 = "";
+  }
 
+  List<String> makeWords(String str) {
+    List<String> words = [];
+    String curWord = "";
+    for (int i = 0; i < 25; i++) {
+      if ((i) >= str.length) {
+        curWord = curWord + space;
+      } else {
+        curWord = curWord + str[i];
+      }
 
+      if (curWord.length == 5) {
+        words.add(curWord);
+        curWord = "";
+      }
+    }
 
+    print("Words: " + words.toString());
+    return words;
+  }
+
+  static bool wordInList(String word, bool upper) {
+    List<String> wordList = allWords3;
+
+    List<String> newWords = [];
+    for (String i in wordList) {
+      if (upper) {
+        newWords.add(i.toUpperCase());
+      } else {
+        newWords.add(i.toLowerCase());
+      }
+    }
+
+    if (newWords.contains(word)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void addWord(String word) {
+    switch (wordNum) {
+      //Add word at Word(wordNum)
+      case 1:
+        word1 = word;
+        break;
+      case 2:
+        word2 = word;
+        break;
+      case 3:
+        word3 = word;
+        break;
+      case 4:
+        word4 = word;
+        break;
+      case 5:
+        word5 = word;
+        break;
+    }
+    if (wordNum >= 6) {
+      wordNum = 6;
+    }
+    else {
+      wordNum++;
+    }
+
+  }
+
+  String clean1Word(String word) {
+    if (upperCase) {
+      return word.toUpperCase();
+    } else {
+      return word.toLowerCase();
+    }
+  }
+
+  void removeWord() {
+    switch (wordNum) {
+      case 2: //On word 2, remove the last one
+      word1 = "";
+        break;
+      case 3:
+        word2 = "";
+        break;
+      case 4:
+        word3 = "";
+        break;
+      case 5:
+        word4 = "";
+        break;
+      case 6:
+        word5 = "";
+        break;
+    }
+    if (wordNum <= 1) {
+      wordNum = 1;
+    } else {
+      wordNum--;
+    }
+  }
 }
 
 /*

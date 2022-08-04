@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:ordlecheater/WordClass.dart';
@@ -10,16 +8,20 @@ import 'WordleClass.dart';
 import 'UIManipulation.dart';
 import 'main.dart';
 
-
 //GlobalKey<_LetterBox> subGlobalKey = GlobalKey();
 
 class WordRow extends StatefulWidget {
-
-  WordRow({  Key? key, required this.notifyParent, required this.wordNum, required this.wordClass}) : super(key: key);
+  WordRow(
+      {Key? key,
+      required this.notifyParent,
+      required this.wordNum,
+      required this.wordClass})
+      : super(key: key);
 
 //  final functionStorage func;
   final int wordNum;
   final WordClass wordClass;
+
   // final WordleClass wordleClass;
   //final String word;
   final double widthFacPhone = 0.95;
@@ -37,15 +39,10 @@ class WordRowState extends State<WordRow> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-
   }
 
-
-void getChildFunc () {
+  void getChildFunc() {
     print("inside child 1");
-
-
 
 //LetterBox.globalKey.currentState?.updateLetter();
   }
@@ -54,11 +51,36 @@ void getChildFunc () {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        LetterBox( notifyParent: widget.notifyParent , wordNum: widget.wordNum , letterNum: 1, wordClass: widget.wordClass,),
-        LetterBox( notifyParent: widget.notifyParent, wordNum: widget.wordNum, letterNum: 2, wordClass: widget.wordClass, ),
-        LetterBox( notifyParent: widget.notifyParent , wordNum: widget.wordNum, letterNum: 3, wordClass: widget.wordClass,),
-        LetterBox( notifyParent: widget.notifyParent , wordNum:widget.wordNum , letterNum: 4, wordClass:widget.wordClass ,),
-        LetterBox( notifyParent: widget.notifyParent, wordNum: widget.wordNum, letterNum: 5, wordClass: widget.wordClass, ),
+        LetterBox(
+          notifyParent: widget.notifyParent,
+          wordNum: widget.wordNum,
+          letterNum: 1,
+          wordClass: widget.wordClass,
+        ),
+        LetterBox(
+          notifyParent: widget.notifyParent,
+          wordNum: widget.wordNum,
+          letterNum: 2,
+          wordClass: widget.wordClass,
+        ),
+        LetterBox(
+          notifyParent: widget.notifyParent,
+          wordNum: widget.wordNum,
+          letterNum: 3,
+          wordClass: widget.wordClass,
+        ),
+        LetterBox(
+          notifyParent: widget.notifyParent,
+          wordNum: widget.wordNum,
+          letterNum: 4,
+          wordClass: widget.wordClass,
+        ),
+        LetterBox(
+          notifyParent: widget.notifyParent,
+          wordNum: widget.wordNum,
+          letterNum: 5,
+          wordClass: widget.wordClass,
+        ),
       ],
     );
   }
@@ -70,9 +92,13 @@ void getChildFunc () {
             height: UIManipulation.calcFacorPix(
                 UIManipulation.getScreenHeightPix(context),
                 UIManipulation.getScreenWidthPix(context) *
-                    UIManipulation.getPlatformFac(0.6, 0.95), 5, true), width: UIManipulation.getWidthPix(
-            UIManipulation.getScreenWidthPix(context),
-            UIManipulation.getPlatformFac(0.6, 0.95)), child: Letters()));
+                    UIManipulation.getPlatformFac(0.6, 0.95),
+                5,
+                true),
+            width: UIManipulation.getWidthPix(
+                UIManipulation.getScreenWidthPix(context),
+                UIManipulation.getPlatformFac(0.6, 0.95)),
+            child: Letters()));
   }
 /*
   Widget wordRow(BuildContext cont, String word, WordClass wordClass, int wordIndex) {
@@ -93,11 +119,6 @@ void getChildFunc () {
   }
 
  */
-
-
-
-
-
 
 }
 
@@ -164,6 +185,3 @@ class _WordRow extends State<WordRow> {
 }
 
  */
-
-
-

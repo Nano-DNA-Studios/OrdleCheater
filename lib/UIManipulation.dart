@@ -45,6 +45,14 @@ class UIManipulation {
     }
   }
 
+  static bool isMobile () {
+    if (kIsWeb) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
 
 /*
  double _CalcHeightFac() {
