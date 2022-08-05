@@ -1,9 +1,3 @@
-
-
-
-
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -12,35 +6,26 @@ import 'package:ordlecheater/WordClass.dart';
 import 'UIManipulation.dart';
 
 class Words extends StatefulWidget {
-
-  const Words({Key? key, required this.wordClass }) : super(key: key);
-
+  const Words({Key? key, required this.wordClass}) : super(key: key);
   final WordClass wordClass;
-
 
   @override
   State<Words> createState() => _Words();
-
 }
 
-
 class _Words extends State<Words> {
-
   @override
   Widget build(BuildContext context) {
-
     widget.wordClass.updatePossibleWords();
-
     return words(this.context, widget.wordClass);
+  }
 
-    }
-
-  Widget words(BuildContext context, WordClass wordClass)  {
-
-    return  Container(
+  Widget words(BuildContext context, WordClass wordClass) {
+    return Container(
       padding: EdgeInsets.only(
           left: 0,
-          top: UIManipulation.getScreenHeightPix(context) *  UIManipulation.getPlatformFac(0.1, 0.01),
+          top: UIManipulation.getScreenHeightPix(context) *
+              UIManipulation.getPlatformFac(0.1, 0.01),
           right: 0,
           bottom: 0),
       child: FractionallySizedBox(
@@ -48,28 +33,28 @@ class _Words extends State<Words> {
         child: Container(
           alignment: Alignment.center,
           padding:
-          EdgeInsets.all(UIManipulation.getScreenWidthPix(context) * 0.05),
+              EdgeInsets.all(UIManipulation.getScreenWidthPix(context) * 0.05),
           decoration: const BoxDecoration(
               color: Colors.purpleAccent,
               borderRadius: BorderRadius.all(Radius.circular(40))),
-          child:  buildGridView(),
+          child: buildGridView(),
         ),
       ),
     );
   }
 
-  Widget buildGridView()  => GridView.builder(
-    shrinkWrap: true,
-    physics: const NeverScrollableScrollPhysics(),
-    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: platfromGridNum(),
-      crossAxisSpacing: 20,
-    ),
-    itemBuilder: (context, index) {
-      return BuildGridWidget(index);
-    },
-    itemCount: maxNum(widget.wordClass.possibleWords.length),
-  );
+  Widget buildGridView() => GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: platfromGridNum(),
+          crossAxisSpacing: 20,
+        ),
+        itemBuilder: (context, index) {
+          return BuildGridWidget(index);
+        },
+        itemCount: maxNum(widget.wordClass.possibleWords.length),
+      );
 
   Widget BuildGridWidget(int index) {
     return Container(
@@ -114,9 +99,4 @@ class _Words extends State<Words> {
       return length;
     }
   }
-
-
-
-
-
 }
