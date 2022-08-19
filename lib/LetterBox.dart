@@ -206,6 +206,7 @@ class LetterBoxState extends State<LetterBox> {
                       cardColor = Colors.orange;
                       widget.wordClass.includedLetters.add(letter);
                       widget.wordClass.removeLetters.remove(letter);
+                      widget.wordClass.addUsedLetter(widget.letterNum, letter);
 
                       print(widget.wordClass.removeLetters);
 
@@ -213,6 +214,7 @@ class LetterBoxState extends State<LetterBox> {
                     case 3:
                       cardColor = Colors.green;
                       widget.wordClass.addLetterAtPos(widget.letterNum, letter);
+                      widget.wordClass.removeUsedLetter(widget.letterNum, letter);
 
                       break;
                   }

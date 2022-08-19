@@ -146,6 +146,7 @@ class _WordlePage extends State<WordlePage> {
           children: [
             Flexible(
               flex: 1,
+              //Delete
               child: Container(
                   height: UIManipulation.getPlatformFac(
                       UIManipulation.getScreenHeightPix(context) * 0.4 * 0.5,
@@ -183,6 +184,7 @@ class _WordlePage extends State<WordlePage> {
                         splashColor: Colors.blue,
                       ))),
             ),
+            //Text Field
             Flexible(
               flex: 3,
               child: Container(
@@ -209,6 +211,7 @@ class _WordlePage extends State<WordlePage> {
                     ),
                   )),
             ),
+            //Add
             Flexible(
               flex: 1,
               child: Container(
@@ -235,6 +238,10 @@ class _WordlePage extends State<WordlePage> {
                               wordInput = "";
                               textController.text = "";
                               print(wordClass.wordNum);
+
+
+
+
                             }
                           });
                           //Check if word is contained in the all word list and then add it
@@ -298,19 +305,19 @@ class _WordlePage extends State<WordlePage> {
 
          */
         child: Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.purpleAccent,
-              title: const Text("Wordle"),
-            ),
+            appBar: null,
             body: SingleChildScrollView(
                 padding: EdgeInsets.only(
                     left: 0,
-                    top: UIManipulation.getScreenWidthPix(context) * 0.05,
+                    top: UIManipulation.getScreenWidthPix(context) * 0.02,
                     right: 0,
                     bottom: 0),
                 scrollDirection: Axis.vertical,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Text("Wordle", style: TextStyle( fontSize: UIManipulation.getScreenHeightPix(context) * 0.2, color: Colors.black),),
+
                     WordRow(
                       notifyParent: notifyParent,
                       wordNum: 1,

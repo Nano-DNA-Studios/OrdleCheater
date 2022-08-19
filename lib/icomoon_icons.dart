@@ -12,6 +12,8 @@ class Icomoon {
 
   static const String _fontFamily = 'icomoon';
 
-  static const IconData globe = IconData(0xe9ca, fontFamily: _fontFamily);
-  static const IconData wordle = IconData(0xeac8, fontFamily: _fontFamily);
+  static const IconData globe = IconData(0xe900, fontFamily: _fontFamily);
+  static const IconData wordle = IconData(0xeac9, fontFamily: _fontFamily);
+  static const IconData settings = IconData(0xe995, fontFamily: _fontFamily);
+
 }

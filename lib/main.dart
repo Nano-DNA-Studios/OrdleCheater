@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:ordlecheater/SettingsPage.dart';
 import 'package:ordlecheater/WordleClass.dart';
 import 'package:ordlecheater/icomoon_icons.dart';
 import 'package:ordlecheater/my_icons_icons.dart';
@@ -60,6 +61,7 @@ class _NavPage extends State<NavPage> {
       "Worldle",
       style: TextStyle(color: Colors.black),
     ),
+    Settings(),
   ];
 
   void _changeNav(int index) {
@@ -76,6 +78,7 @@ class _NavPage extends State<NavPage> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icomoon.wordle), label: "Wordle"),
           BottomNavigationBarItem(icon: Icon(Icomoon.globe), label: "Worldle"),
+          BottomNavigationBarItem(icon: Icon(Icomoon.settings), label: "Settings"),
         ],
         currentIndex: _index,
         onTap: _changeNav,

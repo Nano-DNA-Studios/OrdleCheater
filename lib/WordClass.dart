@@ -17,6 +17,12 @@ class WordClass {
   late String letter4 = "";
   late String letter5 = "";
 
+  late List<String> lettersUsed1 = [];
+  late List<String> lettersUsed2 = [];
+  late List<String> lettersUsed3 = [];
+  late List<String> lettersUsed4 = [];
+  late List<String> lettersUsed5 = [];
+
   late List<String> includedLetters = [];
   late List<String> removeLetters = [];
 
@@ -75,11 +81,37 @@ class WordClass {
       wordList = wordsAtPos(letter5, 4, wordList);
     }
 
+    wordList = wordsWithoutUsed(wordList, lettersUsed1, 0);
+    wordList = wordsWithoutUsed(wordList, lettersUsed2, 1);
+    wordList = wordsWithoutUsed(wordList, lettersUsed3, 2);
+    wordList = wordsWithoutUsed(wordList, lettersUsed4, 3);
+    wordList = wordsWithoutUsed(wordList, lettersUsed5, 4);
+
     if (includedLetters.isNotEmpty) {
       wordList = wordsWithIncluded(wordList, includedLetters);
     }
 
     return wordList;
+  }
+
+  //Make a function that deletes everything and then reloads all saved info
+
+  List<String> wordsWithoutUsed(
+      List<String> words, List<String> letters, int letterNum) {
+    List<String> newWords = [];
+
+    for (String word in words) {
+      bool wordCheck = true;
+      for (String letter in letters) {
+        if (word[letterNum] == letter) {
+          wordCheck = false;
+        }
+      }
+      if (wordCheck) {
+        newWords.add(word);
+      }
+    }
+    return newWords;
   }
 
   List<String> wordsWithIncluded(List<String> words, List<String> letters) {
@@ -374,11 +406,9 @@ class WordClass {
     }
     if (wordNum >= 6) {
       wordNum = 6;
-    }
-    else {
+    } else {
       wordNum++;
     }
-
   }
 
   String clean1Word(String word) {
@@ -390,20 +420,27 @@ class WordClass {
   }
 
   void removeWord() {
+    String wordHold = "";
     switch (wordNum) {
       case 2: //On word 2, remove the last one
-      word1 = "";
+       wordHold = word1;
+        word1 = "";
+
         break;
       case 3:
+        wordHold = word2;
         word2 = "";
         break;
       case 4:
+        wordHold = word3;
         word3 = "";
         break;
       case 5:
+        wordHold = word4;
         word4 = "";
         break;
       case 6:
+        wordHold = word5;
         word5 = "";
         break;
     }
@@ -411,6 +448,129 @@ class WordClass {
       wordNum = 1;
     } else {
       wordNum--;
+    }
+    deleteAllInstancesOfLetter(wordHold);
+  }
+
+  void deleteAllInstancesOfLetter(String word) {
+    //Check for every word
+    List<String> letters = [];
+
+    for (int i = 0; i < word.length; i++) {
+      letters.add(word[i]);
+    }
+
+    for (String letter in letters) {
+      bool delLetter = true;
+      if (word1.contains(letter)) {
+        delLetter = false;
+      }
+      if (word2.contains(letter)) {
+        delLetter = false;
+      }
+      if (word3.contains(letter)) {
+        delLetter = false;
+      }
+      if (word4.contains(letter)) {
+        delLetter = false;
+      }
+      if (word5.contains(letter)) {
+        delLetter = false;
+      }
+
+      if (delLetter) {
+        //Delete all instances of letter
+        //letterUsed
+        // late List<String> includedLetters = [];
+        // late List<String> removeLetters = [];
+        // late String letter1 = "";
+        // late String letter2 = "";
+        // late String letter3 = "";
+        // late String letter4 = "";
+        // late String letter5 = "";
+
+        if (lettersUsed1.contains(letter)) {
+          lettersUsed1.remove(letter);
+        }
+        if (lettersUsed2.contains(letter)) {
+          lettersUsed2.remove(letter);
+        }
+        if (lettersUsed3.contains(letter)) {
+          lettersUsed3.remove(letter);
+        }
+        if (lettersUsed4.contains(letter)) {
+          lettersUsed4.remove(letter);
+        }
+        if (lettersUsed5.contains(letter)) {
+          lettersUsed5.remove(letter);
+        }
+
+        if (includedLetters.contains(letter)) {
+          includedLetters.remove(letter);
+        }
+
+        if (removeLetters.contains(letter)) {
+          removeLetters.remove(letter);
+        }
+
+        if (letter1 == letter) {
+          letter1 = "";
+        }
+        if (letter2 == letter) {
+          letter2 = "";
+        }
+        if (letter3 == letter) {
+          letter3 = "";
+        }
+        if (letter4 == letter) {
+          letter4 = "";
+        }
+        if (letter5 == letter) {
+          letter5 = "";
+        }
+      }
+    }
+
+    updatePossibleWords();
+  }
+
+  void addUsedLetter(int letterNum, String letter) {
+    switch (letterNum) {
+      case 1:
+        lettersUsed1.add(letter);
+        break;
+      case 2:
+        lettersUsed2.add(letter);
+        break;
+      case 3:
+        lettersUsed3.add(letter);
+        break;
+      case 4:
+        lettersUsed4.add(letter);
+        break;
+      case 5:
+        lettersUsed5.add(letter);
+        break;
+    }
+  }
+
+  void removeUsedLetter(int letterNum, String letter) {
+    switch (letterNum) {
+      case 1:
+        lettersUsed1.remove(letter);
+        break;
+      case 2:
+        lettersUsed2.remove(letter);
+        break;
+      case 3:
+        lettersUsed3.remove(letter);
+        break;
+      case 4:
+        lettersUsed4.remove(letter);
+        break;
+      case 5:
+        lettersUsed5.remove(letter);
+        break;
     }
   }
 }
