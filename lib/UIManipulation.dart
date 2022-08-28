@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UIManipulation {
 
@@ -46,11 +47,38 @@ class UIManipulation {
   }
 
   static bool isMobile () {
+
     if (kIsWeb) {
       return false;
     } else {
       return true;
     }
+  }
+
+  static Color ColorChoice (Color cl1, Color cl2, int choice) {
+
+   //This is mostly used for white or black
+      switch (choice) {
+        case 0:
+          //White
+        return cl1;
+        case 1:
+        //White
+          return cl1;
+        case 2:
+          return cl2;
+        case 3:
+          return cl2;
+        case 4:
+          return cl2;
+        case 5:
+          return cl2;
+        case 6:
+        //White
+          return cl1;
+        default:
+          return cl1;
+      }
   }
 
 

@@ -28,6 +28,9 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
 
+  shared_preferences: ^2.0.15
+  url_launcher: ^6.1.5
+  flutter_svg: ^1.1.4
   path_provider: ^2.0.11
   flutter:
     sdk: flutter
@@ -61,10 +64,14 @@ flutter:
 
   assets:
     - assets/Words
+    - assets/socialMedia/
+    - assets/
+    - assets/socialMedia/discord.svg
+    - assets/DNA.jpg
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
-  uses-material-design: true
+  #uses-material-design: true
 
 
 

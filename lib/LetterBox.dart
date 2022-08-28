@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ordlecheater/UIManipulation.dart';
 import 'package:ordlecheater/main.dart';
 import 'package:holding_gesture/holding_gesture.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'WordClass.dart';
+import 'allColorPalettes.dart';
 
 class LetterBox extends StatefulWidget {
   const LetterBox(
@@ -32,10 +35,14 @@ wordclass
 }
 
 class LetterBoxState extends State<LetterBox> {
-  Color cardColor = Colors.white;
+
   int colorState = 1;
   FocusNode focusNode = FocusNode();
   String letter = "";
+
+  late List<Color> ColorPal = widget.wordClass.palette;
+  late Color textColor = widget.wordClass.textColor;
+  late Color cardColor = widget.wordClass.palette[3];
 
   @override
   void initState() {
@@ -44,6 +51,8 @@ class LetterBoxState extends State<LetterBox> {
     //print("init");
     letter = widget.wordClass.getLetter(widget.wordNum, widget.letterNum);
     updateLetter();
+
+
     // print("letter is " + letter);
   }
 
@@ -52,11 +61,16 @@ class LetterBoxState extends State<LetterBox> {
     super.didUpdateWidget(oldWidget);
    // print("update");
     updateLetter();
+
     //print("hello");
   }
 
   void updateLetter() {
     letter = widget.wordClass.getLetter(widget.wordNum, widget.letterNum);
+
+    ColorPal = widget.wordClass.palette;
+    textColor = widget.wordClass.textColor;
+
 
     //check if the letter is contained in possible list or confirmed list
     if (widget.wordClass.includedLetters.contains(letter)) {
@@ -72,13 +86,11 @@ class LetterBoxState extends State<LetterBox> {
       }
     } else {
       colorState = 1;
-      cardColor = Colors.white;
+      cardColor = ColorPal[3];
 
       if (!widget.wordClass.removeLetters.contains(letter)) {
         widget.wordClass.removeLetters.add(letter);
       }
-
-
     }
 
     /*
@@ -93,13 +105,6 @@ class LetterBoxState extends State<LetterBox> {
     }
 
      */
-
-
-
-
-
-
-
 
     // setState(() {
 
@@ -174,8 +179,13 @@ class LetterBoxState extends State<LetterBox> {
 
   @override
   Widget build(BuildContext context) {
+    ColorPal = widget.wordClass.palette;
+    textColor = widget.wordClass.textColor;
+    //cardColor = widget.wordClass.palette[3];
+   // getColors();
     return Expanded(
       child: Card(
+
           color: cardColor,
           child: HoldDetector(
             holdTimeout: const Duration(milliseconds: 100),
@@ -190,13 +200,14 @@ class LetterBoxState extends State<LetterBox> {
                   colorState++;
                   if (colorState > 3) {
                     colorState = 1;
-                    print("colour reset");
+
                   }
 
-                  print(colorState);
+
                   switch (colorState) {
                     case 1:
-                      cardColor = Colors.white;
+                      //Maybe change back to white or black
+                      cardColor = ColorPal[3];
                       widget.wordClass.removeLetterAtPos(widget.letterNum);
                       widget.wordClass.includedLetters.remove(letter);
                       widget.wordClass.removeLetters.add(letter);
@@ -223,7 +234,7 @@ class LetterBoxState extends State<LetterBox> {
               splashColor: Colors.blue,
               child: FittedBox(
                 fit: BoxFit.contain,
-                child: Text(letter
+                child: Text(letter, style: TextStyle(color: textColor),
                     // focusNode: focusNode,
                     // onChanged: (value) {
                     // returnWord(value);

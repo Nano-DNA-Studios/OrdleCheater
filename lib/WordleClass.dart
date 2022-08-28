@@ -11,10 +11,12 @@ import 'package:ordlecheater/LetterBox.dart';
 import 'package:ordlecheater/WordClass.dart';
 import 'package:ordlecheater/WordRow.dart';
 import 'package:ordlecheater/Words.dart';
+import 'package:ordlecheater/allColorPalettes.dart';
 import 'package:ordlecheater/allLetters.dart';
 import 'package:ordlecheater/wordChoices.dart';
 import 'package:ordlecheater/functionStorage.dart';
 import 'package:ordlecheater/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'UIManipulation.dart';
 import 'allLetters.dart';
@@ -38,8 +40,6 @@ class WordleClass {
 
 
   }
-
-
   Widget wordInputs() {
     return Column(
       children: [
@@ -103,16 +103,39 @@ class _WordlePage extends State<WordlePage> {
 
   final textController = TextEditingController();
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
+  late List<Color> ColorPal = Palettes[0];
+  late Color textColor = Colors.white;
+  late int choice = 0;
+
+  //remove all the async getColors except for this one, feed the color into the word class and fetch from there wherever needed
+
+  void getColors() async {
+    final prefs = await SharedPreferences.getInstance();
+    choice = prefs.getInt('ColorMode') ?? 0;
+
+    setState(() {
+      ColorPal = Palettes[choice];
+      wordClass.palette = ColorPal;
+      wordClass.textColor =
+          UIManipulation.ColorChoice(Colors.white, Colors.black, choice);
+      textColor =
+          UIManipulation.ColorChoice(Colors.white, Colors.black, choice);
+      // textColor = UIManipulation.ColorChoice(Colors.white, Colors.black, choice);
+      // wordClass.textColor = UIManipulation.ColorChoice(Colors.white, Colors.black, choice);
+    });
   }
 
   void notifyParent() {
     setState(() {
       word1 = "Unity";
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getColors();
   }
 
   Widget cardWid(int flex) {
@@ -134,7 +157,8 @@ class _WordlePage extends State<WordlePage> {
 
   Widget controller() {
     return Container(
-      height: UIManipulation.getScreenHeightPix(context) * UIManipulation.getPlatformFac(0.4, 0.2),
+      height: UIManipulation.getScreenHeightPix(context) *
+          UIManipulation.getPlatformFac(0.4, 0.2),
       width: UIManipulation.getScreenWidthPix(context) *
           UIManipulation.getPlatformFac(0.7, 0.95),
       child: SizedBox(
@@ -188,25 +212,24 @@ class _WordlePage extends State<WordlePage> {
             Flexible(
               flex: 3,
               child: Container(
-                  height:
-                  UIManipulation.getPlatformFac(
+                  height: UIManipulation.getPlatformFac(
                       UIManipulation.getScreenHeightPix(context) * 0.4 * 0.5,
                       UIManipulation.getScreenHeightPix(context) * 0.4 * 0.2),
                   child: Card(
-                    color: Colors.pinkAccent,
+                    color: ColorPal[3],
                     child: TextField(
                       controller: textController,
                       style: TextStyle(
-                        fontSize: UIManipulation.getPlatformFac(
-                            UIManipulation.getScreenHeightPix(context) *
-                                0.4 *
-                                0.5 *
-                                0.75,
-                            UIManipulation.getScreenHeightPix(context) *
-                                0.4 *
-                                0.2 *
-                                0.75),
-                      ),
+                          fontSize: UIManipulation.getPlatformFac(
+                              UIManipulation.getScreenHeightPix(context) *
+                                  0.4 *
+                                  0.5 *
+                                  0.75,
+                              UIManipulation.getScreenHeightPix(context) *
+                                  0.4 *
+                                  0.2 *
+                                  0.75),
+                          color: textColor),
                       keyboardType: TextInputType.text,
                     ),
                   )),
@@ -217,8 +240,7 @@ class _WordlePage extends State<WordlePage> {
               child: Container(
                   height: UIManipulation.getPlatformFac(
                       UIManipulation.getScreenHeightPix(context) * 0.4 * 0.5,
-                      UIManipulation.getScreenHeightPix(context) * 0.4 * 0.2)
-                     ,
+                      UIManipulation.getScreenHeightPix(context) * 0.4 * 0.2),
                   child: Card(
                       color: Colors.green,
                       child: InkWell(
@@ -231,17 +253,12 @@ class _WordlePage extends State<WordlePage> {
                             if (WordClass.wordInList(
                                 wordClass.clean1Word(wordInput),
                                 wordClass.upperCase)) {
-                              print("InputField: " + wordInput);
+                              //print("InputField: " + wordInput);
                               //Add the word to the list I guess
-                              wordClass
-                                  .addWord(wordClass.clean1Word(wordInput));
+                              wordClass.addWord(wordClass.clean1Word(wordInput));
                               wordInput = "";
                               textController.text = "";
                               print(wordClass.wordNum);
-
-
-
-
                             }
                           });
                           //Check if word is contained in the all word list and then add it
@@ -261,6 +278,8 @@ class _WordlePage extends State<WordlePage> {
 
   @override
   Widget build(BuildContext context) {
+    // getColors();
+
     return RawKeyboardListener(
         focusNode: FocusNode(),
         autofocus: true,
@@ -305,6 +324,7 @@ class _WordlePage extends State<WordlePage> {
 
          */
         child: Scaffold(
+            backgroundColor: ColorPal[0],
             appBar: null,
             body: SingleChildScrollView(
                 padding: EdgeInsets.only(
@@ -316,7 +336,13 @@ class _WordlePage extends State<WordlePage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Wordle", style: TextStyle( fontSize: UIManipulation.getScreenHeightPix(context) * 0.2, color: Colors.black),),
+                    Text(
+                      "Wordle",
+                      style: TextStyle(
+                          fontSize: UIManipulation.getScreenHeightPix(context) *
+                              UIManipulation.getPlatformFac(0.2, 0.1),
+                          color: textColor),
+                    ),
 
                     WordRow(
                       notifyParent: notifyParent,
@@ -348,18 +374,6 @@ class _WordlePage extends State<WordlePage> {
 
                     //Spawn the possible words section
                     Words(wordClass: wordClass),
-
-                    //  Words(
-                    //  dataClass: wordleClass,
-                    // ),
-
-                    // wordRow(context, "Hello", wordClass, 1),
-                    // wordRow(context, "Class", wordClass, 2),
-                    //  wordRow(context, "Words", wordClass, 3),
-                    //  wordRow(context, "Bunny", wordClass, 4),
-                    //  wordRow(context, "Whale", wordClass, 5),
-
-                    //words(context)
                   ],
                 ))));
   }

@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ordlecheater/WordClass.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'UIManipulation.dart';
+import 'allColorPalettes.dart';
 
 class Words extends StatefulWidget {
   const Words({Key? key, required this.wordClass}) : super(key: key);
@@ -14,10 +16,28 @@ class Words extends StatefulWidget {
 }
 
 class _Words extends State<Words> {
+
+ // late List<Color> ColorPal = widget.wordClass.palette;
+ // late Color textColor = widget.wordClass.textColor;
+
+  late List<Color> ColorPal = widget.wordClass.palette;
+   late Color textColor = widget.wordClass.textColor;
+
   @override
   Widget build(BuildContext context) {
+    ColorPal = widget.wordClass.palette;
+    textColor = widget.wordClass.textColor;
     widget.wordClass.updatePossibleWords();
     return words(this.context, widget.wordClass);
+  }
+
+  @override
+  void didUpdateWidget(Words oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // print("update");
+     ColorPal = widget.wordClass.palette;
+   textColor = widget.wordClass.textColor;
+    //print("hello");
   }
 
   Widget words(BuildContext context, WordClass wordClass) {
@@ -34,9 +54,9 @@ class _Words extends State<Words> {
           alignment: Alignment.center,
           padding:
               EdgeInsets.all(UIManipulation.getScreenWidthPix(context) * 0.05),
-          decoration: const BoxDecoration(
-              color: Colors.purpleAccent,
-              borderRadius: BorderRadius.all(Radius.circular(40))),
+          decoration:  BoxDecoration(
+              color: ColorPal[1],
+              borderRadius: const BorderRadius.all(Radius.circular(40))),
           child: buildGridView(),
         ),
       ),
@@ -62,14 +82,14 @@ class _Words extends State<Words> {
         child: Container(
           height: platformFontSize() + 10,
           alignment: Alignment.center,
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-            color: Colors.lightBlueAccent,
+          decoration:  BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
+            color: ColorPal[2],
           ),
           child: Text(
             widget.wordClass.possibleWords[index],
             maxLines: 1,
-            style: TextStyle(fontSize: platformFontSize()),
+            style: TextStyle(fontSize: platformFontSize(), color: textColor),
           ),
         ));
   }
@@ -85,7 +105,7 @@ class _Words extends State<Words> {
 
   double platformFontSize() {
     if (kIsWeb) {
-      return 80;
+      return 75;
     } else {
       //Phones and Other Platforms
       return 45;

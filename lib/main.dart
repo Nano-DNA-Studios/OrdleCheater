@@ -12,6 +12,7 @@ import 'package:ordlecheater/WordleClass.dart';
 import 'package:ordlecheater/icomoon_icons.dart';
 import 'package:ordlecheater/my_icons_icons.dart';
 import 'package:ordlecheater/WordClass.dart';
+import 'package:ordlecheater/supportPage.dart';
 
 import 'LetterBox.dart';
 import 'UIManipulation.dart';
@@ -57,10 +58,7 @@ class _NavPage extends State<NavPage> {
 
   static const List<Widget> _screens = <Widget>[
     WordlePage(),
-    Text(
-      "Worldle",
-      style: TextStyle(color: Colors.black),
-    ),
+    SupportPage(),
     Settings(),
   ];
 
@@ -77,7 +75,7 @@ class _NavPage extends State<NavPage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(icon: Icon(Icomoon.wordle), label: "Wordle"),
-          BottomNavigationBarItem(icon: Icon(Icomoon.globe), label: "Worldle"),
+          BottomNavigationBarItem(icon: Icon(Icomoon.star), label: "Support"),
           BottomNavigationBarItem(icon: Icon(Icomoon.settings), label: "Settings"),
         ],
         currentIndex: _index,

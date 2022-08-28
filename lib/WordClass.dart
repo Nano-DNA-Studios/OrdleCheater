@@ -1,15 +1,21 @@
+import 'dart:core';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart';
 import 'package:ordlecheater/main.dart';
 
+import 'allColorPalettes.dart';
 import 'allWords.dart';
 
 class WordClass {
   static const String space = " ";
 
   late bool upperCase;
+
+  late List<Color> palette = Palettes[0];
+  late Color textColor = Colors.white;
 
   late String letter1 = "";
   late String letter2 = "";
@@ -43,7 +49,7 @@ class WordClass {
   }
  */
   WordClass() {
-    print("start");
+
     upperCase = true;
     cleanWords();
   }
@@ -89,6 +95,11 @@ class WordClass {
 
     if (includedLetters.isNotEmpty) {
       wordList = wordsWithIncluded(wordList, includedLetters);
+    }
+
+    //Rank words in best order
+    if (word1.isNotEmpty) {
+      wordList = rankWords(wordList);
     }
 
     return wordList;
@@ -423,7 +434,7 @@ class WordClass {
     String wordHold = "";
     switch (wordNum) {
       case 2: //On word 2, remove the last one
-       wordHold = word1;
+        wordHold = word1;
         word1 = "";
 
         break;
@@ -573,6 +584,123 @@ class WordClass {
         break;
     }
   }
+
+  List<String> rankWords(List<String> wordList) {
+    //Grab a list of all letters left in the list
+    List<LetterRank> letters = [];
+
+    //Loop for every word
+    for (String word in wordList) {
+      //Loop for every letter in every word
+      for (int i = 0; i < word.length; i++) {
+        if (!LetterRank.containsLetter(letters, word[i])) {
+          //Add the letter to the list
+          letters.add(LetterRank(word[i]));
+        } else {
+          //Add a point for the
+          LetterRank.addPointForLetter(letters, word[i]);
+        }
+      }
+    }
+
+    LetterRank.displayAllLetterRanks(letters);
+
+    List<WordRank> words = [];
+    //Rank each word, it only adds points to unique letters
+    for (String word in wordList) {
+      WordRank wordR = WordRank(word);
+      wordR.setRank(letters);
+      words.add(wordR);
+    }
+
+    WordRank.displayAllWordRanks(words);
+
+    //Sort the words
+
+    List<String> newList = [];
+
+    while (words.length != 0) {
+
+      WordRank highest = words[0];
+      for (int e = 0; e < words.length; e ++) {
+        //Determine which is the highest
+        if (words[e].rank > highest.rank) {
+          highest = words[e];
+        }
+      }
+
+      newList.add(highest.word);
+      words.remove(highest);
+
+    }
+
+    return newList;
+
+  }
+}
+
+class WordRank {
+  late String word;
+  int rank = 0;
+
+  WordRank(this.word);
+
+  void setRank(List<LetterRank> letterRanks) {
+    List<String> usedLetters = [];
+    for (int i = 0; i < word.length; i++) {
+      for (int e = 0; e < letterRanks.length; e++) {
+        if (word[i] == letterRanks[e].letter && !usedLetters.contains(word[i])) {
+          usedLetters.add(word[i]);
+          rank += letterRanks[e].rank;
+          e = letterRanks.length;
+        }
+      }
+    }
+  }
+
+  static void displayAllWordRanks (List<WordRank> list) {
+    for (WordRank i in list) {
+      print(i.word + " : " + i.rank.toString());
+    }
+  }
+
+}
+
+class LetterRank {
+  late String letter;
+  int rank = 1;
+
+  LetterRank(this.letter);
+
+  void addPoint() {
+    rank++;
+  }
+
+  static bool containsLetter(List<LetterRank> list, String letter) {
+    bool verdict = false;
+    for (LetterRank i in list) {
+      if (i.letter == letter) {
+        verdict = true;
+      }
+    }
+    return verdict;
+  }
+
+  static void addPointForLetter(List<LetterRank> list, String letter) {
+    for (LetterRank i in list) {
+      if (i.letter == letter) {
+        i.addPoint();
+        return;
+      }
+    }
+  }
+
+  static void displayAllLetterRanks (List<LetterRank> list) {
+    for (LetterRank i in list) {
+      print(i.letter + " : " + i.rank.toString());
+    }
+  }
+
 }
 
 /*
