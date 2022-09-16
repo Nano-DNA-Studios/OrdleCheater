@@ -142,6 +142,17 @@ class _Settings extends State<Settings> {
     );
   }
 
+  Widget privacyPolicy() {
+
+
+
+
+
+
+
+    return Container();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -167,6 +178,8 @@ class _Settings extends State<Settings> {
                           UIManipulation.getPlatformFac(0.2, 0.1),
                       color: textColor),
                 ),
+                Container(child: ,
+                )
                 colorPaletteChoice(0),
                 colorPaletteChoice(1),
                 colorPaletteChoice(2),
@@ -182,4 +195,10 @@ class _Settings extends State<Settings> {
       child: Text("Settings"),
     );
   }
+
+
+
+
+
+
 }
