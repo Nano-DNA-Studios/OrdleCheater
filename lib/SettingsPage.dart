@@ -95,7 +95,7 @@ class _Settings extends State<Settings> {
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(40)),
-            border: Border.all(color: Colors.black, width: 20)),
+            border: Border.all(color: Colors.black, width:UIManipulation.getPlatformFac(20, 10)  )),
         height: UIManipulation.getScreenHeightPix(context) *
             UIManipulation.getPlatformFac(0.4, 0.15),
         width: UIManipulation.getScreenWidthPix(context) * 0.9,
@@ -141,7 +141,7 @@ class _Settings extends State<Settings> {
         height: UIManipulation.getScreenHeightPix(context) *
             UIManipulation.getPlatformFac(0.1, 0.1),
         width: UIManipulation.getScreenWidthPix(context) *
-            UIManipulation.getPlatformFac(0.2, 0.2),
+            UIManipulation.getPlatformFac(0.2, 0.8),
         child: InkWell(
           child: Container(
             decoration: BoxDecoration(

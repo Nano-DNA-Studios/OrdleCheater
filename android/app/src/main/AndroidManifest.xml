@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ordlecheater">
    <application
-        android:label="ordlecheater"
+        android:label="Ordle Cheater"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/icon">
         <activity
             android:name="com.nanodna.ordlecheater.MainActivity"
             android:exported="true"

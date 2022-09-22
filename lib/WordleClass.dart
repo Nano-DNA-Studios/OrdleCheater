@@ -218,7 +218,7 @@ class _WordlePage extends State<WordlePage> {
             body: SingleChildScrollView(
                 padding: EdgeInsets.only(
                     left: 0,
-                    top: UIManipulation.getScreenWidthPix(context) * 0.02,
+                    top: UIManipulation.getScreenWidthPix(context) * 0.05,
                     right: 0,
                     bottom: 0),
                 scrollDirection: Axis.vertical,
