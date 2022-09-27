@@ -63,7 +63,7 @@ class WordClass {
   List<String> calcPossibleWords() {
     // List<String> listCopy = allWords;
     List<String> wordList = allWords;
-    print(wordList.length);
+
     // List<String> wordList2 = allWords;
 
     // print(removeLetters);
