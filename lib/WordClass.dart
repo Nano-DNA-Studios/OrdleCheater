@@ -62,7 +62,9 @@ class WordClass {
 
   List<String> calcPossibleWords() {
     // List<String> listCopy = allWords;
+
     List<String> wordList = allWords;
+
 
     // List<String> wordList2 = allWords;
 
