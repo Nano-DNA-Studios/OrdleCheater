@@ -10,7 +10,6 @@ import 'package:flutter/widgets.dart';
 import 'package:ordlecheater/LetterBox.dart';
 import 'package:ordlecheater/WordClass.dart';
 import 'package:ordlecheater/WordRow.dart';
-import 'package:ordlecheater/Words.dart';
 import 'package:ordlecheater/allColorPalettes.dart';
 import 'package:ordlecheater/allLetters.dart';
 import 'package:ordlecheater/wordChoices.dart';
@@ -78,6 +77,18 @@ class _WordlePage extends State<WordlePage> {
     // TODO: implement initState
     super.initState();
     getColors();
+  }
+
+  @override
+  void didUpdateWidget(WordlePage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // print("update");
+    setState(() {
+      //wordInput = textController.text.toString();
+
+    });
+
+    //print("hello");
   }
 
   Widget cardWid(int flex) {
@@ -262,9 +273,104 @@ class _WordlePage extends State<WordlePage> {
                     controller(),
 
                     //Spawn the possible words section
-                    Words(wordClass: wordClass),
+                    words(context, wordClass),
                   ],
                 ))));
   }
+
+
+  Widget words(BuildContext context, WordClass wordClass) {
+    return Container(
+      padding: EdgeInsets.only(
+          left: 0,
+          top: UIManipulation.getScreenHeightPix(context) *
+              UIManipulation.getPlatformFac(0.1, 0.01),
+          right: 0,
+          bottom: UIManipulation.getScreenHeightPix(context) *
+              UIManipulation.getPlatformFac(0.1, 0.01)),
+      child: FractionallySizedBox(
+        widthFactor: UIManipulation.getPlatformFac(0.7, 0.95),
+        child: Container(
+          alignment: Alignment.center,
+          padding:
+          EdgeInsets.all(UIManipulation.getScreenWidthPix(context) * 0.05),
+          decoration: BoxDecoration(
+              color: ColorPal[1],
+              borderRadius: const BorderRadius.all(Radius.circular(40))),
+          child: buildGridView(),
+        ),
+      ),
+    );
+  }
+
+  Widget buildGridView() => GridView.builder(
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: platfromGridNum(),
+      crossAxisSpacing: 20,
+    ),
+    itemBuilder: (context, index) {
+      return BuildGridWidget(index);
+    },
+    itemCount: maxNum(wordClass.possibleWords.length),
+  );
+
+  Widget BuildGridWidget(int index) {
+    return GestureDetector(
+      child: Container(
+          alignment: Alignment.center,
+          child: Container(
+            height: platformFontSize() + 10,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
+              color: ColorPal[2],
+            ),
+            child: Text(
+              wordClass.possibleWords[index],
+              maxLines: 1,
+              style: TextStyle(fontSize: platformFontSize(), color: textColor),
+            ),
+          )),
+      onTap: () {
+        setState(() {
+          //wordInput = textController.text.toString();
+          wordClass.addWord(wordClass.possibleWords[index]);
+        });
+      },
+    );
+  }
+
+  int platfromGridNum() {
+    if (kIsWeb) {
+      return 4;
+    } else {
+      //Phones and Other Platforms
+      return 2;
+    }
+  }
+
+  double platformFontSize() {
+    if (kIsWeb) {
+      return 75;
+    } else {
+      //Phones and Other Platforms
+      return 40;
+    }
+  }
+
+  int maxNum(int length) {
+    if (length > 100) {
+      return 100;
+    } else {
+      return length;
+    }
+  }
+
+
+
+
+
 }
 
