@@ -62,7 +62,7 @@ class WordClass {
 
   List<String> calcPossibleWords() {
     // List<String> listCopy = allWords;
-    List<String> wordList = allWords3;
+    List<String> wordList = allWords;
     // List<String> wordList2 = allWords;
 
     // print(removeLetters);
@@ -378,7 +378,7 @@ class WordClass {
   }
 
   static bool wordInList(String word, bool upper) {
-    List<String> wordList = allWords3;
+    List<String> wordList = allWords;
 
     List<String> newWords = [];
     for (String i in wordList) {
