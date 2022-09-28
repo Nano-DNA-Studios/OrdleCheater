@@ -32,6 +32,12 @@ class WordClass {
   late List<String> includedLetters = [];
   late List<String> removeLetters = [];
 
+  late List<String> usedLetters1 = [];
+  late List<String> usedLetters2 = [];
+  late List<String> usedLetters3 = [];
+  late List<String> usedLetters4 = [];
+  late List<String> usedLetters5 = [];
+
   late String word1 = "";
   late String word2 = "";
   late String word3 = "";
@@ -42,16 +48,11 @@ class WordClass {
 
   late List<String> possibleWords = [];
 
-/*
-  WordleClass() {
-    //loadWords();
-   // possibleWords = calcPossibleWords();
-  }
- */
   WordClass() {
 
     upperCase = true;
     cleanWords();
+    updatePossibleWords();
   }
 
   //Need to add a function that capatilizes everything or lowercases everything
@@ -61,14 +62,8 @@ class WordClass {
   }
 
   List<String> calcPossibleWords() {
-    // List<String> listCopy = allWords;
 
     List<String> wordList = allWords;
-
-
-    // List<String> wordList2 = allWords;
-
-    // print(removeLetters);
 
     wordList = cleanList(wordList);
     wordList = removeUnwantedWords(wordList, removeLetters);
@@ -640,6 +635,23 @@ class WordClass {
     return newList;
 
   }
+
+  void addedWord (String word) {
+
+    for (int i = 0; i < word.length; i ++) {
+      if (includedLetters.contains(word[i])) {
+        //Is included, dont touch
+      } else {
+        if (!removeLetters.contains(word[i])) {
+          removeLetters.add(word[i]);
+        }
+      }
+    }
+
+    updatePossibleWords();
+  }
+
+
 }
 
 class WordRank {

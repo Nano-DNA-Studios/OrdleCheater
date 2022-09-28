@@ -8,8 +8,9 @@ import 'UIManipulation.dart';
 import 'allColorPalettes.dart';
 
 class Words extends StatefulWidget {
-  const Words({Key? key, required this.wordClass}) : super(key: key);
+  const Words({Key? key, required this.wordClass,  required this.notifyParent,}) : super(key: key);
   final WordClass wordClass;
+  final Function() notifyParent;
 
   @override
   State<Words> createState() => _Words();
@@ -41,7 +42,8 @@ class _Words extends State<Words> {
   }
 
   Widget words(BuildContext context, WordClass wordClass) {
-    widget.wordClass.updatePossibleWords();
+    //wordClass.updatePossibleWords();
+    //print("Updated list");
     return Container(
       padding: EdgeInsets.only(
           left: 0,
@@ -54,7 +56,7 @@ class _Words extends State<Words> {
         child: Container(
           alignment: Alignment.center,
           padding:
-              EdgeInsets.all(UIManipulation.getScreenWidthPix(context) * 0.05),
+          EdgeInsets.all(UIManipulation.getScreenWidthPix(context) * 0.05),
           decoration:  BoxDecoration(
               color: ColorPal[1],
               borderRadius: const BorderRadius.all(Radius.circular(40))),
@@ -65,34 +67,48 @@ class _Words extends State<Words> {
   }
 
   Widget buildGridView() => GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: platfromGridNum(),
-          crossAxisSpacing: 20,
-        ),
-        itemBuilder: (context, index) {
-          return BuildGridWidget(index);
-        },
-        itemCount: maxNum(widget.wordClass.possibleWords.length),
-      );
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: platfromGridNum(),
+      crossAxisSpacing: 20,
+    ),
+    itemBuilder: (context, index) {
+      return BuildGridWidget(index);
+    },
+    itemCount: maxNum(widget.wordClass.possibleWords.length),
+  );
 
   Widget BuildGridWidget(int index) {
-    return Container(
+    return GestureDetector(child:Container(
         alignment: Alignment.center,
         child: Container(
-          height: platformFontSize() + 10,
+
+          height: platformFontSize() + 20,
           alignment: Alignment.center,
           decoration:  BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(20)),
             color: ColorPal[2],
           ),
-          child: Text(
+          child:FittedBox(child: Text(
             widget.wordClass.possibleWords[index],
             maxLines: 1,
-            style: TextStyle(fontSize: platformFontSize(), color: textColor),
+            style: TextStyle(fontSize: 500, color: textColor),
           ),
-        ));
+            fit: BoxFit.fitHeight,
+          )
+        )) ,
+      onTap: () {
+        //setState(() {
+          //wordInput = textController.text.toString();
+          widget.wordClass.addWord(widget.wordClass.possibleWords[index]);
+
+          widget.notifyParent();
+
+
+          //
+      //  });
+      },);
   }
 
   int platfromGridNum() {
@@ -120,4 +136,5 @@ class _Words extends State<Words> {
       return length;
     }
   }
+
 }

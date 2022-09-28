@@ -63,13 +63,12 @@ class _WordlePage extends State<WordlePage> {
           UIManipulation.ColorChoice(Colors.white, Colors.black, choice);
       textColor =
           UIManipulation.ColorChoice(Colors.white, Colors.black, choice);
-
     });
   }
 
   void notifyParent() {
     setState(() {
-      word1 = "Unity";
+      print("idk");
     });
   }
 
@@ -121,11 +120,9 @@ class _WordlePage extends State<WordlePage> {
                       color: Colors.red,
                       child: InkWell(
                         onTap: () {
-
                           setState(() {
                             wordClass.removeWord();
                             print(wordClass.wordNum);
-
                           });
                           //Check if word is contained in the all word list and then add it
                         },
@@ -183,7 +180,8 @@ class _WordlePage extends State<WordlePage> {
                                 wordClass.upperCase)) {
                               //print("InputField: " + wordInput);
                               //Add the word to the list I guess
-                              wordClass.addWord(wordClass.clean1Word(wordInput));
+                              wordClass
+                                  .addWord(wordClass.clean1Word(wordInput));
                               wordInput = "";
                               textController.text = "";
                               print(wordClass.wordNum);
@@ -211,7 +209,6 @@ class _WordlePage extends State<WordlePage> {
     return RawKeyboardListener(
         focusNode: FocusNode(),
         autofocus: true,
-
         child: Scaffold(
             backgroundColor: ColorPal[0],
             appBar: null,
@@ -262,99 +259,12 @@ class _WordlePage extends State<WordlePage> {
                     controller(),
 
                     //Spawn the possible words section
-                    words(context, wordClass),
+                    Words(
+                      wordClass: wordClass,
+                      notifyParent: notifyParent,
+                    ),
+                    //words(context, wordClass),
                   ],
                 ))));
   }
-
-  Widget words(BuildContext context, WordClass wordClass) {
-    wordClass.updatePossibleWords();
-    return Container(
-      padding: EdgeInsets.only(
-          left: 0,
-          top: UIManipulation.getScreenHeightPix(context) *
-              UIManipulation.getPlatformFac(0.1, 0.01),
-          right: 0,
-          bottom: 0),
-      child: FractionallySizedBox(
-        widthFactor: UIManipulation.getPlatformFac(0.7, 0.95),
-        child: Container(
-          alignment: Alignment.center,
-          padding:
-          EdgeInsets.all(UIManipulation.getScreenWidthPix(context) * 0.05),
-          decoration:  BoxDecoration(
-              color: ColorPal[1],
-              borderRadius: const BorderRadius.all(Radius.circular(40))),
-          child: buildGridView(),
-        ),
-      ),
-    );
-  }
-
-  Widget buildGridView() => GridView.builder(
-    shrinkWrap: true,
-    physics: const NeverScrollableScrollPhysics(),
-    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: platfromGridNum(),
-      crossAxisSpacing: 20,
-    ),
-    itemBuilder: (context, index) {
-      return BuildGridWidget(index);
-    },
-    itemCount: maxNum(wordClass.possibleWords.length),
-  );
-
-  Widget BuildGridWidget(int index) {
-    return GestureDetector(child:Container(
-        alignment: Alignment.center,
-        child: Container(
-          padding: EdgeInsets.all(
-              UIManipulation.getScreenHeightPix(context) *
-                  0.01),
-          height: platformFontSize() + 30,
-          alignment: Alignment.center,
-          decoration:  BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(20)),
-            color: ColorPal[2],
-          ),
-          child: Text(
-            wordClass.possibleWords[index],
-            maxLines: 1,
-            style: TextStyle(fontSize: platformFontSize(), color: textColor),
-          ),
-        )) ,
-    onTap: () {
-      setState(() {
-        //wordInput = textController.text.toString();
-        wordClass.addWord(wordClass.possibleWords[index]);
-      });
-    },);
-  }
-
-  int platfromGridNum() {
-    if (kIsWeb) {
-      return 4;
-    } else {
-      //Phones and Other Platforms
-      return 2;
-    }
-  }
-
-  double platformFontSize() {
-    if (kIsWeb) {
-      return 75;
-    } else {
-      //Phones and Other Platforms
-      return 40;
-    }
-  }
-
-  int maxNum(int length) {
-    if (length > 100) {
-      return 100;
-    } else {
-      return length;
-    }
-  }
 }
-
