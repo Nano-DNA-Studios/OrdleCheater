@@ -32,12 +32,6 @@ class WordClass {
   late List<String> includedLetters = [];
   late List<String> removeLetters = [];
 
-  late List<String> usedLetters1 = [];
-  late List<String> usedLetters2 = [];
-  late List<String> usedLetters3 = [];
-  late List<String> usedLetters4 = [];
-  late List<String> usedLetters5 = [];
-
   late String word1 = "";
   late String word2 = "";
   late String word3 = "";
@@ -49,11 +43,12 @@ class WordClass {
   late List<String> possibleWords = [];
 
   WordClass() {
-
     upperCase = true;
     cleanWords();
     updatePossibleWords();
   }
+
+//Gonna have to add to an existing or create a new function that removes letters from usedLetters x arrays
 
   //Need to add a function that capatilizes everything or lowercases everything
 
@@ -62,6 +57,12 @@ class WordClass {
   }
 
   List<String> calcPossibleWords() {
+    print("New");
+    print("LettersUsed1" + lettersUsed1.toString());
+    print("LettersUsed2" + lettersUsed2.toString());
+    print("LettersUsed3" + lettersUsed3.toString());
+    print("LettersUsed4" + lettersUsed4.toString());
+    print("LettersUsed5" + lettersUsed5.toString());
 
     List<String> wordList = allWords;
 
@@ -191,14 +192,15 @@ class WordClass {
         return space;
       } else {
         if ((letterNum - 1) >= word.length) {
-          print("Giving Space");
+          //print("Giving Space");
           return space;
         } else {
           return word.characters.characterAt(letterNum - 1).toString();
         }
       }
     } on Exception {
-      print("error");
+      //
+      // print("error");
       return space;
     }
   }
@@ -303,7 +305,7 @@ class WordClass {
 
   List<String> removeUnwantedWords(List<String> words, List<String> letters) {
     if (letters.isEmpty) {
-      print("in here");
+      // print("in here");
       return words;
     }
 
@@ -371,7 +373,7 @@ class WordClass {
       }
     }
 
-    print("Words: " + words.toString());
+    // print("Words: " + words.toString());
     return words;
   }
 
@@ -618,9 +620,8 @@ class WordClass {
     List<String> newList = [];
 
     while (words.length != 0) {
-
       WordRank highest = words[0];
-      for (int e = 0; e < words.length; e ++) {
+      for (int e = 0; e < words.length; e++) {
         //Determine which is the highest
         if (words[e].rank > highest.rank) {
           highest = words[e];
@@ -629,16 +630,13 @@ class WordClass {
 
       newList.add(highest.word);
       words.remove(highest);
-
     }
 
     return newList;
-
   }
 
-  void addedWord (String word) {
-
-    for (int i = 0; i < word.length; i ++) {
+  void addedWord(String word) {
+    for (int i = 0; i < word.length; i++) {
       if (includedLetters.contains(word[i])) {
         //Is included, dont touch
       } else {
@@ -650,8 +648,6 @@ class WordClass {
 
     updatePossibleWords();
   }
-
-
 }
 
 class WordRank {
@@ -664,7 +660,8 @@ class WordRank {
     List<String> usedLetters = [];
     for (int i = 0; i < word.length; i++) {
       for (int e = 0; e < letterRanks.length; e++) {
-        if (word[i] == letterRanks[e].letter && !usedLetters.contains(word[i])) {
+        if (word[i] == letterRanks[e].letter &&
+            !usedLetters.contains(word[i])) {
           usedLetters.add(word[i]);
           rank += letterRanks[e].rank;
           e = letterRanks.length;
@@ -673,12 +670,11 @@ class WordRank {
     }
   }
 
-  static void displayAllWordRanks (List<WordRank> list) {
+  static void displayAllWordRanks(List<WordRank> list) {
     for (WordRank i in list) {
-      print(i.word + " : " + i.rank.toString());
+      //print(i.word + " : " + i.rank.toString());
     }
   }
-
 }
 
 class LetterRank {
@@ -710,12 +706,11 @@ class LetterRank {
     }
   }
 
-  static void displayAllLetterRanks (List<LetterRank> list) {
+  static void displayAllLetterRanks(List<LetterRank> list) {
     for (LetterRank i in list) {
-      print(i.letter + " : " + i.rank.toString());
+      // print(i.letter + " : " + i.rank.toString());
     }
   }
-
 }
 
 /*

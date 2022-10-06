@@ -8,7 +8,11 @@ import 'UIManipulation.dart';
 import 'allColorPalettes.dart';
 
 class Words extends StatefulWidget {
-  const Words({Key? key, required this.wordClass,  required this.notifyParent,}) : super(key: key);
+  const Words({
+    Key? key,
+    required this.wordClass,
+    required this.notifyParent,
+  }) : super(key: key);
   final WordClass wordClass;
   final Function() notifyParent;
 
@@ -17,12 +21,11 @@ class Words extends StatefulWidget {
 }
 
 class _Words extends State<Words> {
-
- // late List<Color> ColorPal = widget.wordClass.palette;
- // late Color textColor = widget.wordClass.textColor;
+  // late List<Color> ColorPal = widget.wordClass.palette;
+  // late Color textColor = widget.wordClass.textColor;
 
   late List<Color> ColorPal = widget.wordClass.palette;
-   late Color textColor = widget.wordClass.textColor;
+  late Color textColor = widget.wordClass.textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -36,79 +39,82 @@ class _Words extends State<Words> {
   void didUpdateWidget(Words oldWidget) {
     super.didUpdateWidget(oldWidget);
     // print("update");
-     ColorPal = widget.wordClass.palette;
-   textColor = widget.wordClass.textColor;
+    ColorPal = widget.wordClass.palette;
+    textColor = widget.wordClass.textColor;
     //print("hello");
   }
 
   Widget words(BuildContext context, WordClass wordClass) {
     //wordClass.updatePossibleWords();
     //print("Updated list");
-    return Container(
-      padding: EdgeInsets.only(
-          left: 0,
-          top: UIManipulation.getScreenHeightPix(context) *
-              UIManipulation.getPlatformFac(0.1, 0.01),
-          right: 0,
-          bottom: 0),
-      child: FractionallySizedBox(
-        widthFactor: UIManipulation.getPlatformFac(0.7, 0.95),
-        child: Container(
-          alignment: Alignment.center,
-          padding:
-          EdgeInsets.all(UIManipulation.getScreenWidthPix(context) * 0.05),
-          decoration:  BoxDecoration(
-              color: ColorPal[1],
-              borderRadius: const BorderRadius.all(Radius.circular(40))),
-          child: buildGridView(),
-        ),
-      ),
-    );
+
+return  Container(
+  padding: EdgeInsets.only(
+      left: 0,
+      top: UIManipulation.getScreenHeightPix(context) *
+          UIManipulation.getPlatformFac(0.1, 0.01),
+      right: 0,
+      bottom: 0),
+  child: FractionallySizedBox(
+    widthFactor: UIManipulation.getPlatformFac(0.7, 0.95),
+    child: Container(
+      alignment: Alignment.center,
+      padding:
+      EdgeInsets.all(UIManipulation.getScreenWidthPix(context) * 0.05),
+      decoration:  BoxDecoration(
+          color: ColorPal[1],
+          borderRadius: const BorderRadius.all(Radius.circular(40))),
+      child: buildGridView(),
+    ),
+  ),
+);
+
+
   }
 
   Widget buildGridView() => GridView.builder(
-    shrinkWrap: true,
-    physics: const NeverScrollableScrollPhysics(),
-    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: platfromGridNum(),
-      crossAxisSpacing: 20,
-    ),
-    itemBuilder: (context, index) {
-      return BuildGridWidget(index);
-    },
-    itemCount: maxNum(widget.wordClass.possibleWords.length),
-  );
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: platfromGridNum(),
+          crossAxisSpacing: 20,
+        ),
+        itemBuilder: (context, index) {
+          return BuildGridWidget(index);
+        },
+        itemCount: maxNum(widget.wordClass.possibleWords.length),
+      );
 
   Widget BuildGridWidget(int index) {
-    return GestureDetector(child:Container(
-        alignment: Alignment.center,
-        child: Container(
-
-          height: platformFontSize() + 20,
+    return GestureDetector(
+      child: Container(
           alignment: Alignment.center,
-          decoration:  BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(20)),
-            color: ColorPal[2],
-          ),
-          child:FittedBox(child: Text(
-            widget.wordClass.possibleWords[index],
-            maxLines: 1,
-            style: TextStyle(fontSize: 500, color: textColor),
-          ),
-            fit: BoxFit.fitHeight,
-          )
-        )) ,
+          child: Container(
+              height: platformFontSize() + 20,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                color: ColorPal[2],
+              ),
+              child: FittedBox(
+                child: Text(
+                  widget.wordClass.possibleWords[index],
+                  maxLines: 1,
+                  style: TextStyle(fontSize: 500, color: textColor),
+                ),
+                fit: BoxFit.fitHeight,
+              ))),
       onTap: () {
         //setState(() {
-          //wordInput = textController.text.toString();
-          widget.wordClass.addWord(widget.wordClass.possibleWords[index]);
+        //wordInput = textController.text.toString();
+        widget.wordClass.addWord(widget.wordClass.possibleWords[index]);
 
-          widget.notifyParent();
+        widget.notifyParent();
 
-
-          //
-      //  });
-      },);
+        //
+        //  });
+      },
+    );
   }
 
   int platfromGridNum() {
@@ -136,5 +142,29 @@ class _Words extends State<Words> {
       return length;
     }
   }
+
+/*
+  Container(
+        padding: EdgeInsets.only(
+            left: 0,
+            top: UIManipulation.getScreenHeightPix(context) *
+                UIManipulation.getPlatformFac(0.1, 0.01),
+            right: 0,
+            bottom: 0),
+        child: FractionallySizedBox(
+          widthFactor: UIManipulation.getPlatformFac(0.7, 0.95),
+          child: Container(
+            alignment: Alignment.center,
+            padding:
+            EdgeInsets.all(UIManipulation.getScreenWidthPix(context) * 0.05),
+            decoration:  BoxDecoration(
+                color: ColorPal[1],
+                borderRadius: const BorderRadius.all(Radius.circular(40))),
+            child: buildGridView(),
+          ),
+        ),
+      ),
+
+   */
 
 }

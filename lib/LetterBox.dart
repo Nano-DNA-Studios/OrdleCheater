@@ -67,10 +67,8 @@ class LetterBoxState extends State<LetterBox> {
 
   void updateLetter() {
     letter = widget.wordClass.getLetter(widget.wordNum, widget.letterNum);
-
     ColorPal = widget.wordClass.palette;
     textColor = widget.wordClass.textColor;
-
 
     //check if the letter is contained in possible list or confirmed list
     if (widget.wordClass.includedLetters.contains(letter)) {
@@ -93,77 +91,7 @@ class LetterBoxState extends State<LetterBox> {
       }
     }
 
-    /*
-    if (widget.wordClass.includedLetters.contains(letter) && colorState < 2) {
-      colorState = 2;
-      print("set colour");
-
-
-      cardColor = Colors.orange;
-
-
-    }
-
-     */
-
-    // setState(() {
-
-    // });
   }
-
-/*
-  void returnWord(String val) {
-    currentWord = val;
-
-    switch (widget.wordIndex) {
-      case 1:
-        widget.wordClass.word1 = currentWord;
-        break;
-
-      case 2:
-        widget.wordClass.word1 = currentWord;
-        break;
-
-      case 3:
-        widget.wordClass.word1 = currentWord;
-        break;
-
-      case 4:
-        widget.wordClass.word1 = currentWord;
-        break;
-
-      case 5:
-        widget.wordClass.word1 = currentWord;
-        break;
-
-      default:
-
-
-    }
-
-  String word() {
-    switch (widget.wordIndex) {
-      case 1:
-        return widget.wordClass.word1;
-
-      case 2:
-        return widget.wordClass.word2;
-
-      case 3:
-        return widget.wordClass.word3;
-
-      case 4:
-        return widget.wordClass.word4;
-
-      case 5:
-        return widget.wordClass.word5;
-
-      default:
-        return widget.wordClass.word1;
-    }
-  }
-
- */
 
   void getFocus() {
     focusNode.requestFocus();
@@ -200,9 +128,7 @@ class LetterBoxState extends State<LetterBox> {
                   colorState++;
                   if (colorState > 3) {
                     colorState = 1;
-
                   }
-
 
                   switch (colorState) {
                     case 1:
@@ -219,6 +145,7 @@ class LetterBoxState extends State<LetterBox> {
                       widget.wordClass.removeLetters.remove(letter);
                       widget.wordClass.addUsedLetter(widget.letterNum, letter);
 
+
                       print(widget.wordClass.removeLetters);
 
                       break;
@@ -226,6 +153,8 @@ class LetterBoxState extends State<LetterBox> {
                       cardColor = Colors.green;
                       widget.wordClass.addLetterAtPos(widget.letterNum, letter);
                       widget.wordClass.removeUsedLetter(widget.letterNum, letter);
+
+                      //Gonna have to add to an existing or create a new function that removes letters from usedLetters x arrays
 
                       break;
                   }
